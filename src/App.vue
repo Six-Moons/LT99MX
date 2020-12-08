@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <left-panel></left-panel>
-    <router-view/>
+    <div class="row">
+      <left-panel class="col col-4"></left-panel>
+      <router-view class="col col-8"/>
+    </div>
   </div>
 </template>
 
