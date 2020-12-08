@@ -7,14 +7,12 @@
        <img class="logo-img" src="./assets/logo.png">
      </div>
    </nav>
-    <!-- <div class="container"> -->
       <div class="row">
-        <left-panel class="col col-4"></left-panel>
-        <router-view class="col col-8"/>
+        <left-panel class="col col-3"></left-panel>
+        <router-view class="col col-9"/>
       </div>
     </div>
 
- <!-- </div> -->
 </template>
 
 <script>
