@@ -1,41 +1,22 @@
 <template>
     <div class="sidebar">
-        <div class="sidebar-backdrop" @click="closeSidebarPanel" v-if="isPanelOpen"></div>
-        <transition name="slide">
-            <div v-if="isPanelOpen"
-                 class="sidebar-panel">
-                <slot></slot>
-            </div>
-        </transition>
+        <div class="sidebar-panel">
+            <slot></slot>
+        </div>
     </div>
 </template>
 <script>
-    import { store, mutations } from '@/store.js'
     export default {
-       methods: {
-           closeSidebarPanel: mutations.toggleNav
-       },
-       computed: {
-           isPanelOpen() {
-               return store.isNavOpen
-           }
-       }
+        data: () => ({
+            
+        }),
+        methods: {
+
+        }
     }
 </script>
 <style>
-    .slide-enter-active,
-    .slide-leave-active
-    {
-        transition: transform 0.2s ease;
-    }
-
-    .slide-enter,
-    .slide-leave-to {
-        transform: translateX(-100%);
-        transition: all 150ms ease-in 0s
-    }
-
-    .sidebar-backdrop {
+    /* .sidebar-backdrop {
         background-color: rgba(0,0,0,.5);
         width: 100vw;
         height: 100vh;
@@ -43,7 +24,7 @@
         top: 0;
         left: 0;
         cursor: pointer;
-    }
+    } */
 
     .sidebar-panel {
         overflow-y: auto;

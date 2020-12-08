@@ -1,30 +1,37 @@
 <template>
  <div id="app">
+
    <nav class="main-nav">
-     <Burger></Burger>
+     Liga Tetris99
      <div class="logo">
        <img class="logo-img" src="./assets/logo.png">
      </div>
    </nav>
+    <div class="container">
+      <div class="row">
+        <left-panel class="col">
+            <Sidebar>
+                <ul class="sidebar-panel-nav">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                </ul>
+            </Sidebar>
+        </left-panel>
+        <center-panel class="col"></center-panel>
+        <right-panel class="col"></right-panel>
+      </div>
+    </div>
 
-   <Sidebar>
-     <ul class="sidebar-panel-nav">
-       <li><a href="#home">Home</a></li>
-       <li><a href="#about">About</a></li>
-       <li><a href="#contact">Contact</a></li>
-     </ul>
-   </Sidebar>
  </div>
 </template>
 
 <script>
-import Burger from './components/menu/Burger.vue';
 import Sidebar from './components/menu/Sidebar.vue';
 
 export default {
  name: 'app',
  components: {
-   Burger,
    Sidebar
  }
 }
