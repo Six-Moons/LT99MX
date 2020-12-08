@@ -1,9 +1,13 @@
 <template>
     <div class="left-panel">
         <ul class="panel-nav">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#Home">Tetris</a></li>
+            <li><a href="#Rankings">Rankings</a></li>
+            <li><a href="#Noticias">Noticias</a></li>
+            <li><a href="#MiCuenta">Mi Cuenta</a></li>
+            <li><a href="#FAQ">FAQ / Comentarios</a></li>
+            <li><a href="#Donaciones">Donaciones</a></li>
+            <li><a class="btn btn-danger logout" href="#Logout">Cerrar Sesión</a></li>
         </ul>
     </div>
 </template>
@@ -28,5 +32,11 @@ export default {
         font-size: 1.5rem;
         display: block;
         padding-bottom: 0.5em;
+    }
+    .panel-nav {
+        padding-top: 5%;
+    }
+    .logout {
+        margin-right: 10%;
     }
 </style>
