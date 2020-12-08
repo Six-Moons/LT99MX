@@ -1,28 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <div class="row">
+        <left-panel class="col"></left-panel>
+        <center-panel class="col"></center-panel>
+        <right-panel class="col"></right-panel>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CenterPanel from './components/CenterPanel.vue'
+import RightPanel from './components/RightPanel.vue'
+import LeftPanel from './components/LeftPanel.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    LeftPanel,
+    CenterPanel,
+    RightPanel,
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
