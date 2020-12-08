@@ -56,6 +56,12 @@
             </p>
           </b-carousel-slide>
         </b-carousel>
+        <!-- News feed -->
+        <news-card class="news-card"></news-card>
+        <news-card class="news-card"></news-card>
+        <news-card class="news-card"></news-card>
+        <news-card class="news-card"></news-card>
+        <news-card class="news-card"></news-card>
       </div>
       <right-panel class="col col-4"></right-panel>
     </div>
@@ -63,6 +69,7 @@
 </template>
 
 <script>
+import NewsCard from '../components/NewsCard.vue'
 import RightPanel from '../components/RightPanel.vue'
 // @ is an alias to /src
 // import CenterPanel from '@/components/CenterPanel.vue'
@@ -71,7 +78,14 @@ import RightPanel from '../components/RightPanel.vue'
 export default {
   name: 'Home',
   components: {
-    RightPanel
+    RightPanel,
+    NewsCard
   }
 }
 </script>
+
+<style scoped>
+  .news-card {
+    margin: 1rem;
+  }
+</style>
