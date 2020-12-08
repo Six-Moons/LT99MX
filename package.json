@@ -1,22 +1,25 @@
 {
-  "name": "lt99m",
+  "name": "lt99mx",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nilirias/LT99M.git"
+    "url": "git+https://github.com/nilirias/LT99MX.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nilirias/LT99M/issues"
+    "url": "https://github.com/nilirias/LT99MX/issues"
   },
-  "homepage": "https://github.com/nilirias/LT99M#readme",
+  "homepage": "https://github.com/nilirias/LT99MX#readme",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "private": true,
+  "contributors": [
+    "Nina Sepúlveda",
+    "Alejandra García",
+    "Juan Francisco Barrón"
+  ]
 }
