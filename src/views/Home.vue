@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="home">
     <div class="row">
       <div class="col col-8">
         <!-- Most important news -->
@@ -121,12 +121,13 @@ export default {
 .news-card {
   margin: 1rem;
 }
-.home {
+#home {
   height: 100vh;
   overflow-y: scroll;
   scrollbar-width: none;
+  padding: 1em;
 }
-.home::-webkit-scrollbar {
+#home::-webkit-scrollbar {
   display: none;
 }
 </style>
