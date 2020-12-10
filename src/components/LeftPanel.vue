@@ -1,12 +1,24 @@
 <template>
     <div class="left-panel">
         <ul class="nav-sidebar list-unstyled panel-nav">
-            <li class="active"><a href="#Home">Tetris</a></li>
-            <li><a href="#Rankings">Rankings</a></li>
-            <li><a href="#Noticias">Noticias</a></li>
-            <li><a href="#FAQ">FAQ / Comentarios</a></li>
-            <li><a href="#Donaciones">Donaciones</a></li>
-            <li><a href="#MiCuenta">Mi Cuenta</a></li>
+            <router-link to="/" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">Tetris</a></li>
+            </router-link>
+            <router-link to="/rankings" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">Rankings</a></li>
+            </router-link>
+            <router-link to="/noticias" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">Noticias</a></li>
+            </router-link>
+            <router-link to="/faq" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">FAQ/Comentarios</a></li>
+            </router-link>
+            <router-link to="/donaciones" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">Donaciones</a></li>
+            </router-link>
+            <router-link to="/mi-cuenta" v-slot="{ href, navigate, isExactActive,  }">
+                <li :class="[isExactActive && 'active']"><a :href="href" @click="navigate">Mi cuenta</a></li>
+            </router-link>
         </ul>
         <ul class="logout">
             <li><a class="btn btn-lg btn-danger" href="#Logout">Cerrar Sesión</a></li>
