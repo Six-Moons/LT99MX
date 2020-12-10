@@ -2,6 +2,11 @@
   <div id="right-panel">
     <top-3-table :title="'Top 3 Liga A'" :data="rankLigaA"></top-3-table>
     <top-3-table :title="'Top 3 Liga B'" :data="rankLigaB"></top-3-table>
+    <hr />
+    <img
+      src="https://image.shutterstock.com/z/stock-vector-your-ad-here-grunge-stamp-with-on-vector-illustration-196566251.jpg"
+      alt="Ad placeholder"
+    />
   </div>
 </template>
 
@@ -30,5 +35,9 @@ export default {
 <style scoped>
 #right-panel {
   margin-top: 1em;
+}
+img {
+  height: 30vh;
+  width: auto;
 }
 </style>

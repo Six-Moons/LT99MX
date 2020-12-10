@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="row">
-      <div class="col col-8">
+      <div id="news-area" class="col col-8">
         <!-- Most important news -->
         <b-carousel
           id="carousel-1"
@@ -121,13 +121,13 @@ export default {
 .news-card {
   margin: 1rem;
 }
-#home {
+#news-area {
   height: 100vh;
   overflow-y: scroll;
   scrollbar-width: none;
   padding: 1em;
 }
-#home::-webkit-scrollbar {
+#news-area::-webkit-scrollbar {
   display: none;
 }
 </style>
