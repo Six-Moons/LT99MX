@@ -12,7 +12,7 @@
           background="#ababab"
           img-width="1024"
           img-height="480"
-          style="text-shadow: 1px 1px 2px #333;"
+          style="text-shadow: 1px 1px 2px #333"
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
           label-prev=""
@@ -74,46 +74,46 @@
 </template>
 
 <script>
-import NewsCard from '../components/NewsCard.vue';
-import RightPanel from '../components/RightPanel.vue';
+import NewsCard from "../components/NewsCard.vue";
+import RightPanel from "../components/RightPanel.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     RightPanel,
-    NewsCard
+    NewsCard,
   },
   data() {
     return {
       news: [
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Puyo puyo tetris',
+          title: "Puyo puyo tetris",
           content:
-            'Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris'
+            "Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
-        }
-      ]
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
+        },
+      ],
     };
-  }
+  },
 };
 </script>
 
@@ -121,12 +121,14 @@ export default {
 .news-card {
   margin: 1rem;
 }
+
 #news-area {
   height: 100vh;
   overflow-y: scroll;
   scrollbar-width: none;
   padding: 1em;
 }
+
 #news-area::-webkit-scrollbar {
   display: none;
 }
