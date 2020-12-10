@@ -32,7 +32,9 @@
           </b-carousel-slide>
 
           <!-- Slides with image only -->
-          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+          <b-carousel-slide
+            img-src="https://picsum.photos/1024/480/?image=58"
+          ></b-carousel-slide>
 
           <!-- Slides with img slot -->
           <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
@@ -44,24 +46,27 @@
                 height="480"
                 src="https://picsum.photos/1024/480/?image=55"
                 alt="image slot"
-              >
+              />
             </template>
           </b-carousel-slide>
 
           <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-          <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+          <b-carousel-slide
+            caption="Blank Image"
+            img-blank
+            img-alt="Blank image"
+          >
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-              a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse eros felis, tincidunt a tincidunt eget, convallis vel
+              est. Ut pellentesque ut lacus vel interdum.
             </p>
           </b-carousel-slide>
         </b-carousel>
         <!-- News feed -->
-        <news-card class="news-card"></news-card>
-        <news-card class="news-card"></news-card>
-        <news-card class="news-card"></news-card>
-        <news-card class="news-card"></news-card>
-        <news-card class="news-card"></news-card>
+        <div v-for="article in news" v-bind:key="article.title">
+          <news-card class="news-card" :article="article"></news-card>
+        </div>
       </div>
       <right-panel class="col col-4"></right-panel>
     </div>
@@ -69,23 +74,59 @@
 </template>
 
 <script>
-import NewsCard from '../components/NewsCard.vue'
-import RightPanel from '../components/RightPanel.vue'
-// @ is an alias to /src
-// import CenterPanel from '@/components/CenterPanel.vue'
-// import RightPanel from '@/components/RightPanel.vue'
+import NewsCard from '../components/NewsCard.vue';
+import RightPanel from '../components/RightPanel.vue';
 
 export default {
   name: 'Home',
   components: {
     RightPanel,
     NewsCard
+  },
+  data() {
+    return {
+      news: [
+        {
+          title: 'Lorem ipsum',
+          content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+        },
+        {
+          title: 'Puyo puyo tetris',
+          content:
+            'Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris'
+        },
+        {
+          title: 'Lorem ipsum',
+          content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+        },
+        {
+          title: 'Lorem ipsum',
+          content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+        },
+        {
+          title: 'Lorem ipsum',
+          content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+        }
+      ]
+    };
   }
-}
+};
 </script>
 
 <style scoped>
-  .news-card {
-    margin: 1rem;
-  }
+.news-card {
+  margin: 1rem;
+}
+.home {
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.home::-webkit-scrollbar {
+  display: none;
+}
 </style>
