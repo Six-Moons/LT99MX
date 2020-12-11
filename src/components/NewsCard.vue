@@ -5,11 +5,21 @@
     </b-card-text>
 
     <!-- Reaction buttons -->
-    <b-button variant="outline-primary" class="reaction-btn">😆</b-button>
-    <b-button variant="outline-primary" class="reaction-btn">😍</b-button>
-    <b-button variant="outline-primary" class="reaction-btn">😢</b-button>
-    <b-button variant="outline-primary" class="reaction-btn">🤬</b-button>
-    <b-button variant="outline-primary" class="reaction-btn">🐸</b-button>
+    <b-button variant="primary" class="reaction-btn">
+      😆<b-badge variant="light">1</b-badge>
+    </b-button>
+    <b-button variant="primary" class="reaction-btn">
+      😍<b-badge variant="light">9</b-badge>
+    </b-button>
+    <b-button variant="primary" class="reaction-btn">
+      😢<b-badge variant="light">2</b-badge>
+    </b-button>
+    <b-button variant="primary" class="reaction-btn">
+      🤬<b-badge variant="light">6</b-badge>
+    </b-button>
+    <b-button variant="primary" class="reaction-btn">
+      🐸<b-badge variant="light">1</b-badge>
+    </b-button>
   </b-card>
 </template>
 
