@@ -124,6 +124,7 @@ export default {
 
 #news-area {
   padding: 1em;
+  /* background-color: var(--light); */
 }
 
 @media (min-width: 992px) {

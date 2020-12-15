@@ -2,33 +2,87 @@
   <div class="left-panel">
     <ul class="nav-sidebar list-unstyled panel-nav">
       <router-link to="/" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">Tetris</a>
+        <li :class="[isExactActive && 'active']" class="red">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Tetris
+          </a>
         </li>
       </router-link>
       <router-link to="/rankings" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">Rankings</a>
+        <li :class="[isExactActive && 'active']" class="orange">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Rankings
+          </a>
         </li>
       </router-link>
       <router-link to="/noticias" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">Noticias</a>
+        <li :class="[isExactActive && 'active']" class="yellow">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Noticias
+          </a>
         </li>
       </router-link>
       <router-link to="/faq" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">FAQ/Comentarios</a>
+        <li :class="[isExactActive && 'active']" class="green">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            FAQ/Comentarios
+          </a>
         </li>
       </router-link>
       <router-link to="/donaciones" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">Donaciones</a>
+        <li :class="[isExactActive && 'active']" class="blue">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Donaciones
+          </a>
         </li>
       </router-link>
       <router-link to="/mi-cuenta" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']">
-          <a :href="href" @click="navigate">Mi cuenta</a>
+        <li :class="[isExactActive && 'active']" class="purple">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Mi cuenta
+          </a>
         </li>
       </router-link>
     </ul>
@@ -45,40 +99,78 @@ export default {
 </script>
 
 <style scoped>
+.red.active,
+.red:hover {
+  background-color: var(--red);
+  border-radius: 9999px;
+}
+
+.orange.active,
+.orange:hover {
+  background-color: var(--orange);
+  border-radius: 9999px;
+}
+
+.yellow.active,
+.yellow:hover,
+.yellow.active > a,
+.yellow:hover > a {
+  background-color: var(--yellow);
+  color: var(--dark);
+  border-radius: 9999px;
+}
+
+.green.active,
+.green:hover {
+  background-color: var(--green);
+  border-radius: 9999px;
+}
+
+.blue.active,
+.blue:hover {
+  background-color: var(--blue);
+  border-radius: 9999px;
+}
+
+.purple.active,
+.purple:hover {
+  background-color: var(--purple);
+  border-radius: 9999px;
+}
+
 .left-panel {
   font-family: "HomepageBaukasten-bold";
   height: 100vh;
-  background-color: rgb(12, 9, 58);
   transition: all 0.3s;
+  background-color: var(--dark);
 }
+
+li {
+  width: 24vw;
+  margin-left: 0em;
+}
+
 ul.panel-nav {
   list-style-type: none;
 }
+
 ul.logout {
   list-style-type: none;
 }
+
 ul.panel-nav > li > a {
-  color: #fff;
   text-decoration: none;
-  font-size: 1.4rem;
+  font-size: 3vh;
   display: block;
   padding-bottom: 0.5em;
-  padding-left: 30px;
+  padding-left: 1em;
+  color: var(--light);
 }
-.panel-nav > .active > a,
-.panel-nav > .active > a:hover,
-.panel-nav > .active > a:focus {
-  color: rgb(223, 223, 223);
-  background-color: rgb(8, 6, 20);
-}
-.panel-nav > li > a:hover {
-  color: rgb(12, 9, 58);
-  background: #fff;
-}
+
 a,
 a:hover,
 a:focus {
-  color: inherit;
+  /* color: inherit; */
   text-decoration: none;
   transition: all 0.3s;
 }
@@ -86,6 +178,7 @@ a:focus {
 .panel-nav {
   padding-top: 5%;
 }
+
 .logout {
   position: absolute;
   display: inline-block;
@@ -93,5 +186,19 @@ a:focus {
   font-size: 1.5rem;
   color: #fff;
   width: 100%;
+}
+
+a:hover > .rotate {
+  animation: 0.5s linear 0s 1 normal rotate_tetromino;
+}
+
+@keyframes rotate_tetromino {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

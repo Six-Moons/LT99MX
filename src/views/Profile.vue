@@ -5,8 +5,9 @@
         <h1>Perfil</h1>
         <div class="row">
           <div class="col row">
-            <div id="username" class="col-8">{{ username }}</div>
-            <div class="col-4">{{ favorite_badge }}</div>
+            <div id="username" class="col-sm-8">{{ username }}</div>
+            <div class="col-sm-4">{{ favorite_badge }}</div>
+            <hr />
             <div>
               <b-img
                 :src="photo_url"
@@ -15,15 +16,23 @@
                 :alt="`Foto de ${username}`"
               ></b-img>
             </div>
+            <hr />
             <div>{{ name }} - {{ state }}</div>
+            <hr />
           </div>
           <div class="col">
             <div>Ranking</div>
+            <hr />
             <div>Partidas recientes</div>
+            <hr />
             <div>Insignias</div>
+            <hr />
           </div>
         </div>
-        <div>Descripción</div>
+        <div>
+          Descripción
+          <p>{{ description }}</p>
+        </div>
       </div>
       <right-panel class="col-4 hide-sm"></right-panel>
     </div>
@@ -44,6 +53,8 @@ export default {
         "https://sadanduseless.b-cdn.net/wp-content/uploads/2019/06/cat-breading11.jpg",
       name: "Fulano Pérez",
       state: "Tlaxcala",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula quam diam, sit amet egestas nisi volutpat in. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ac neque id enim volutpat dapibus facilisis sed diam. Donec lorem mi, auctor vel nisl eu, sagittis efficitur massa. Maecenas ac. ",
     };
   },
 };
