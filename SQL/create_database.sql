@@ -32,7 +32,7 @@ CREATE TABLE InsigniaObtenida (
     fechaDeObtencion date NOT NULL,
 
     PRIMARY KEY (userID, insigniaID),
-    FOREIGN KEY (userID) references Usuarios(userID)
+    FOREIGN KEY (userID) references Usuarios(userID),
     FOREIGN KEY (insigniaID) references Insignias(insigniaID)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE Noticias (
     noticiaID varchar(15) NOT NULL,
     titulo varchar(50) NOT NULL,
     descripcion varchar (500) NOT NULL,
-    adminID varchar(15) NOT NULL
+    adminID varchar(15) NOT NULL,
 
     PRIMARY KEY (noticiaID),
     FOREIGN KEY (adminID) references Usuarios(userID)
@@ -62,8 +62,6 @@ CREATE TABLE Participaciones (
     posicion int,
 
     PRIMARY KEY (jornada, partida, fechaDeJugacion, userID),
-    FOREIGN KEY (jornada) references Partidas(jornada),
-    FOREIGN KEY (partida) references Partidas(partida),
-    FOREIGN KEY (fechaDeJugacion) references Partidas(fechaDeJugacion),
+    PRIMARY KEY (jornada, partida, fechaDeJugacion) references Partidas(jornada, partida, fechaDeJugacion),
     FOREIGN KEY (userID) references Usuarios(userID)
 );
