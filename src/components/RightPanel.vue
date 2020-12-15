@@ -11,24 +11,24 @@
 </template>
 
 <script>
-import Top3Table from './Top3Table.vue';
+import Top3Table from "./Top3Table.vue";
 export default {
   components: { Top3Table },
-  name: 'RightPanel',
+  name: "RightPanel",
   data() {
     return {
       rankLigaA: [
-        { nombre: 'Nilirias', puntos: 100 },
-        { nombre: 'Delta', puntos: 99 },
-        { nombre: 'Aza', puntos: 97 }
+        { nombre: "Player 1", puntos: 100 },
+        { nombre: "Player 2", puntos: 99 },
+        { nombre: "Player 3", puntos: 97 },
       ],
       rankLigaB: [
-        { nombre: 'Vicky', puntos: 95 },
-        { nombre: 'AAAAAAAAAAAA', puntos: 92 },
-        { nombre: 'Foobar', puntos: 87 }
-      ]
+        { nombre: "Player 4", puntos: 95 },
+        { nombre: "Player 5", puntos: 92 },
+        { nombre: "Player 6", puntos: 87 },
+      ],
     };
-  }
+  },
 };
 </script>
 
@@ -40,10 +40,10 @@ img {
   height: 30vh;
   width: auto;
 }
-.right-panel{
-    background: rgba(0,212,255,1);
-    font-family: "HomepageBaukasten-bold";
-    height: 100vh;
-    transition: all 0.3s;
+.right-panel {
+  background: rgba(0, 212, 255, 1);
+  font-family: "HomepageBaukasten-bold";
+  height: 100vh;
+  transition: all 0.3s;
 }
 </style>

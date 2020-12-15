@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="row">
-      <left-panel class="col col-3"></left-panel>
-      <router-view class="col col-9" />
+      <left-panel class="col-3 hide-sm"></left-panel>
+      <router-view class="col-lg-9" />
     </div>
   </div>
 </template>
@@ -45,6 +45,12 @@ body {
     rgba(225, 113, 87, 1) 48%,
     rgba(249, 248, 113, 1) 100%
   );
+}
+
+@media (max-width: 991px) {
+  .hide-sm {
+    display: none;
+  }
 }
 </style>
 

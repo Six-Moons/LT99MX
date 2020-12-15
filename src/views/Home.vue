@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="row">
-      <div id="news-area" class="col col-8">
+      <div id="news-area" class="col-lg-8">
         <!-- Most important news -->
         <b-carousel
           id="carousel-1"
@@ -68,7 +68,7 @@
           <news-card class="news-card" :article="article"></news-card>
         </div>
       </div>
-      <right-panel class="col col-4"></right-panel>
+      <right-panel class="col-4 hide-sm"></right-panel>
     </div>
   </div>
 </template>
@@ -123,13 +123,25 @@ export default {
 }
 
 #news-area {
-  height: 100vh;
+  /* height: 100vh;
   overflow-y: scroll;
-  scrollbar-width: none;
+  scrollbar-width: none; */
   padding: 1em;
 }
 
-#news-area::-webkit-scrollbar {
+/* #news-area::-webkit-scrollbar {
   display: none;
+} */
+
+@media (min-width: 992px) {
+  #news-area {
+    height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+
+  #news-area::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
