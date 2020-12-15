@@ -1,0 +1,17 @@
+:root {
+  --blue: #0341ae !important;
+  --red: #ff3213 !important;
+  --orange: #ff971c !important;
+  --yellow: #ffd500 !important;
+  --green: #72cb3b !important;
+  --primary: #0341ae !important;
+  --success: #72cb3b !important;
+  --warning: #ffd500 !important;
+  --danger: #ff3213 !important;
+  --light: #e5f8f8 !important;
+  --dark: #020334 !important;
+}
+
+.bg-light {
+  background-color: var(--light) !important;
+}

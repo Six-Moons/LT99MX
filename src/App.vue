@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="lg" type="dark" variant="dark" class="hide-lg">
+    <b-navbar toggleable="lg" type="light" variant="light" class="hide-lg">
       <b-navbar-brand to="/">LT99MX</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
