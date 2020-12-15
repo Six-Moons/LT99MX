@@ -1,12 +1,12 @@
 <template>
   <div class="profile">
     <div class="row">
-      <div id="profile-area" class="col col-8">
+      <div id="profile-area" class="col-lg-8">
         <h1>Perfil</h1>
         <div class="row">
           <div class="col row">
-            <div id="username" class="col col-8">{{ username }}</div>
-            <div class="col col-4">{{ favorite_badge }}</div>
+            <div id="username" class="col-8">{{ username }}</div>
+            <div class="col-4">{{ favorite_badge }}</div>
             <div>
               <b-img
                 :src="photo_url"
@@ -25,7 +25,7 @@
         </div>
         <div>Descripción</div>
       </div>
-      <right-panel class="col col-4"></right-panel>
+      <right-panel class="col-4 hide-sm"></right-panel>
     </div>
   </div>
 </template>
