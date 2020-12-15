@@ -93,9 +93,11 @@
         </li>
       </router-link>
     </ul>
-    <ul class="logout">
-      <li><a class="btn btn-lg btn-danger" href="#Logout">Cerrar Sesión</a></li>
-    </ul>
+    <div class="logout">
+      <a class="btn btn-lg btn-danger logout-btn" href="#Logout"
+        >Cerrar Sesión</a
+      >
+    </div>
   </div>
 </template>
 
@@ -106,6 +108,11 @@ export default {
 </script>
 
 <style scoped>
+.logout-btn {
+  border-radius: 9999px;
+  width: 100%;
+}
+
 .logo-div {
   width: 5vh;
   height: 5vh;
@@ -194,12 +201,12 @@ a:focus {
 }
 
 .logout {
-  position: absolute;
-  display: inline-block;
+  position: fixed;
   bottom: 0;
   font-size: 1.5rem;
   color: #fff;
-  width: 100%;
+  width: 11rem;
+  margin-left: calc(12.5vw - 6rem);
 }
 
 a:hover > .rotate {

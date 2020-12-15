@@ -66,6 +66,7 @@ export default {
   overflow-y: scroll;
   scrollbar-width: none;
   padding: 1em;
+  background-color: var(--light);
 }
 
 #profile-area::-webkit-scrollbar {
