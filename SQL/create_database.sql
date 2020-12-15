@@ -1,9 +1,9 @@
-CREATE DATABASE tetris_test;
+-- CREATE DATABASE tetris_test;
 
-USE tetris_test;
+-- USE tetris_test;
 
 CREATE TABLE Insignias (
-    insigniaID varchar(15) NOT NULL,
+    insigniaID varchar(15) NOT NULL UNIQUE,
     titulo varchar(20) NOT NULL,
     descripcion varchar (100),
 
@@ -11,7 +11,7 @@ CREATE TABLE Insignias (
 );
 
 CREATE TABLE Usuarios (
-    userID varchar(15) NOT NULL,
+    userID varchar(15) NOT NULL UNIQUE,
     soiAdmin boolean NOT NULL,
     username varchar(20) NOT NULL,
     correo varchar(50) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Usuarios (
 );
 
 CREATE TABLE InsigniaObtenida (
-    userID varchar(15) NOT NULL,
+    userID varchar(15) NOT NULL UNIQUE,
     insigniaID varchar(15) NOT NULL,
     fechaDeObtencion date NOT NULL,
 
@@ -37,7 +37,7 @@ CREATE TABLE InsigniaObtenida (
 );
 
 CREATE TABLE Noticias (
-    noticiaID varchar(15) NOT NULL,
+    noticiaID varchar(15) NOT NULL UNIQUE,
     titulo varchar(50) NOT NULL,
     descripcion varchar (500) NOT NULL,
     adminID varchar(15) NOT NULL,
@@ -47,21 +47,19 @@ CREATE TABLE Noticias (
 );
 
 CREATE TABLE Partidas (
+    fechaDeJugacion date NOT NULL UNIQUE,
     jornada int NOT NULL,
     partida int NOT NULL,
-    fechaDeJugacion date NOT NULL,
 
-    PRIMARY KEY (jornada, partida, fechaDeJugacion)
+    PRIMARY KEY (fechaDeJugacion)
 );
 
 CREATE TABLE Participaciones (
-    jornada int NOT NULL,
-    partida int NOT NULL,
     fechaDeJugacion date NOT NULL,
     userID varchar(15) NOT NULL,
     posicion int,
 
-    PRIMARY KEY (jornada, partida, fechaDeJugacion, userID),
-    PRIMARY KEY (jornada, partida, fechaDeJugacion) references Partidas(jornada, partida, fechaDeJugacion),
+    PRIMARY KEY (fechaDeJugacion, userID),
+    FOREIGN KEY (fechaDeJugacion) references Partidas(fechaDeJugacion),
     FOREIGN KEY (userID) references Usuarios(userID)
 );
