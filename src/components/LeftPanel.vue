@@ -1,5 +1,12 @@
 <template>
   <div class="left-panel">
+    <div class="logo-div">
+      <img
+        src="../assets/logo.png"
+        alt="Logo Liga Tetris 99 México"
+        class="img-fluid"
+      />
+    </div>
     <ul class="nav-sidebar list-unstyled panel-nav">
       <router-link to="/" v-slot="{ href, navigate, isExactActive }">
         <li :class="[isExactActive && 'active']" class="red">
@@ -99,6 +106,13 @@ export default {
 </script>
 
 <style scoped>
+.logo-div {
+  width: 5vh;
+  height: 5vh;
+  margin-left: 2.5vh;
+  margin-top: 1em;
+}
+
 .red.active,
 .red:hover {
   background-color: var(--red);
