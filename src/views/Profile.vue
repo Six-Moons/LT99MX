@@ -64,4 +64,10 @@ export default {
 #username {
   font-size: x-large;
 }
+
+@media (max-width: 993px) {
+  #profile {
+    margin-top: 3em;
+  }
+}
 </style>

@@ -123,15 +123,8 @@ export default {
 }
 
 #news-area {
-  /* height: 100vh;
-  overflow-y: scroll;
-  scrollbar-width: none; */
   padding: 1em;
 }
-
-/* #news-area::-webkit-scrollbar {
-  display: none;
-} */
 
 @media (min-width: 992px) {
   #news-area {
@@ -142,6 +135,12 @@ export default {
 
   #news-area::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media (max-width: 993px) {
+  #home {
+    margin-top: 3em;
   }
 }
 </style>
