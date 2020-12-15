@@ -13,8 +13,8 @@ CREATE TABLE Insignias (
 CREATE TABLE Usuarios (
     userID varchar(15) NOT NULL UNIQUE,
     soiAdmin boolean NOT NULL,
-    username varchar(20) NOT NULL,
-    correo varchar(50) NOT NULL,
+    username varchar(20) NOT NULL UNIQUE,
+    correo varchar(50) NOT NULL UNIQUE,
     contrasenia varchar(50) NOT NULL,
     nombre varchar(50) NOT NULL,
     estado varchar(20) NOT NULL,
