@@ -12,7 +12,7 @@
         title-item-class="bg-dark"
         title-link-class="tab-title text-light"
       >
-        <b-table :items="table.posiciones"></b-table>
+        <b-table hover :items="table.posiciones"></b-table>
       </b-tab>
     </b-tabs>
   </div>
@@ -62,7 +62,7 @@ export default {
           ],
         },
         {
-          version: "JStis",
+          version: "JStris",
           posiciones: [
             { nombre: "Delta", puntos: 100 },
             { nombre: "Aza", puntos: 100 },

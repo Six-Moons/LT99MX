@@ -72,7 +72,11 @@ export default {
 .tab-title {
   font-size: 3vh;
   font-weight: bold;
-  /* color: ; */
+}
+
+table.table-hover tbody tr:hover {
+  background-color: var(--red);
+  color: var(--light);
 }
 
 body {
