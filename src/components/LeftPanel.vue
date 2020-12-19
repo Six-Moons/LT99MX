@@ -202,7 +202,7 @@ a:focus {
 
 .logout {
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
   font-size: 1.5rem;
   color: #fff;
   width: 11rem;

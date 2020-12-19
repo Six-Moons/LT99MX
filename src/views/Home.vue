@@ -139,7 +139,7 @@ export default {
   }
 }
 
-@media (max-width: 993px) {
+@media (max-width: 991px) {
   #home {
     margin-top: 3em;
   }

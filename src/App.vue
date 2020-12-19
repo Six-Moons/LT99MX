@@ -47,6 +47,7 @@ export default {
   components: { LeftPanel },
 };
 </script>
+
 <style>
 #app {
   overflow-x: hidden;
