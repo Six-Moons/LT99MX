@@ -49,6 +49,10 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "HomepageBaukasten-bold";
+}
+
 #app {
   overflow-x: hidden;
 }
@@ -63,6 +67,12 @@ export default {
   font-family: "HomepageBaukasten-bold";
   src: local("HomepageBaukasten-bold"),
     url(./assets/fonts/HomepageBaukasten-Bold.ttf) format("truetype");
+}
+
+.tab-title {
+  font-size: 3vh;
+  font-weight: bold;
+  /* color: ; */
 }
 
 body {
