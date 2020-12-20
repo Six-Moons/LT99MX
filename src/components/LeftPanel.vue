@@ -78,7 +78,11 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/mi-cuenta" v-slot="{ href, navigate, isExactActive }">
+      <router-link
+        v-if="session"
+        to="/mi-cuenta"
+        v-slot="{ href, navigate, isExactActive }"
+      >
         <li :class="[isExactActive && 'active']" class="purple">
           <a :href="href" @click="navigate">
             <svg width="1em" height="1em" class="rotate">
@@ -89,6 +93,24 @@
               />
             </svg>
             Mi cuenta
+          </a>
+        </li>
+      </router-link>
+      <router-link
+        v-if="!session"
+        to="/log-in"
+        v-slot="{ href, navigate, isExactActive }"
+      >
+        <li :class="[isExactActive && 'active']" class="purple">
+          <a :href="href" @click="navigate">
+            <svg width="1em" height="1em" class="rotate">
+              <image
+                xlink:href="https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg"
+                width="1em"
+                height="1em"
+              />
+            </svg>
+            Iniciar sesión
           </a>
         </li>
       </router-link>
@@ -104,6 +126,7 @@
 <script>
 export default {
   name: "LeftPanel",
+  props: ["session"],
 };
 </script>
 

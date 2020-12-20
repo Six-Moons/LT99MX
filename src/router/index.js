@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
 import Rankings from '../views/Rankings.vue';
+import LogIn from '../views/LogIn.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/rankings',
     name: 'Rankings',
     component: Rankings
+  },
+  {
+    path: '/log-in',
+    name: 'Log In',
+    component: LogIn
   }
 ];
 

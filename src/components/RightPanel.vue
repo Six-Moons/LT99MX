@@ -5,7 +5,7 @@
     <hr />
     <img
       :src="imgs[Math.floor(Math.random() * imgs.length)]"
-      alt="placeholder"
+      alt="Image related to Tetris"
     />
   </div>
 </template>
@@ -44,10 +44,12 @@ export default {
   height: calc(100vh - 1em);
   overflow-y: scroll;
 }
+
 img {
-  height: 30vh;
+  height: 24vh;
   width: auto;
 }
+
 .right-panel {
   background: rgba(0, 212, 255, 1);
   font-family: "HomepageBaukasten-bold";

@@ -33,7 +33,7 @@
       </b-collapse>
     </b-navbar>
     <div class="row">
-      <left-panel class="col-3 hide-sm"></left-panel>
+      <left-panel class="col-3 hide-sm" :session="loggedIn"></left-panel>
       <router-view class="col-lg-9" />
     </div>
   </div>
@@ -45,6 +45,11 @@ import LeftPanel from "./components/LeftPanel.vue";
 export default {
   name: "App",
   components: { LeftPanel },
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
 };
 </script>
 
