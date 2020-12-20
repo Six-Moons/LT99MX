@@ -4,7 +4,7 @@
     <top-3-table :title="'Top 3 Liga B'" :data="rankLigaB"></top-3-table>
     <hr />
     <img
-      src="https://image.shutterstock.com/z/stock-vector-your-ad-here-grunge-stamp-with-on-vector-illustration-196566251.jpg"
+      :src="imgs[Math.floor(Math.random() * imgs.length)]"
       alt="placeholder"
     />
   </div>
@@ -26,6 +26,12 @@ export default {
         { nombre: "Player 4", puntos: 95 },
         { nombre: "Player 5", puntos: 92 },
         { nombre: "Player 6", puntos: 87 },
+      ],
+      imgs: [
+        require("@/assets/imgs/schezo.png"),
+        require("@/assets/imgs/arle.png"),
+        require("@/assets/imgs/feli.png"),
+        require("@/assets/imgs/rulue.png"),
       ],
     };
   },
