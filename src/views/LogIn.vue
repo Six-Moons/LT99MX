@@ -2,6 +2,7 @@
   <div class="login bg-light">
     <div class="row">
       <div class="col-sm">
+        <h2>Crear Cuenta</h2>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-form-group id="input-group-1" label="Correo:" label-for="input-1">
             <b-form-input
@@ -72,11 +73,13 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="danger">Reset</b-button>
+          <div class="form-btns">
+            <b-button type="submit" variant="primary">Registrarse</b-button>
+          </div>
         </b-form>
       </div>
       <div class="col-sm">
+        <h2>Iniciar Sesión</h2>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-form-group id="input-group-1" label="Correo:" label-for="input-1">
             <b-form-input
@@ -87,6 +90,7 @@
               required
             ></b-form-input>
           </b-form-group>
+
           <b-form-group
             id="input-group-4"
             label="Contraseña:"
@@ -100,9 +104,18 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="danger">Reset</b-button>
+
+          <div class="form-btns">
+            <b-button type="submit" variant="primary">Iniciar Sesión</b-button>
+          </div>
         </b-form>
+      </div>
+      <div id="waifu">
+        <img
+          :src="imgs[Math.floor(Math.random() * imgs.length)]"
+          alt="Image related to Tetris"
+          class="img-fluid"
+        />
       </div>
     </div>
   </div>
@@ -158,6 +171,12 @@ export default {
         "Otro",
       ],
       show: true,
+      imgs: [
+        require("@/assets/imgs/schezo.png"),
+        require("@/assets/imgs/arle.png"),
+        require("@/assets/imgs/feli.png"),
+        require("@/assets/imgs/rulue.png"),
+      ],
     };
   },
   methods: {
@@ -185,8 +204,18 @@ export default {
 <style scoped>
 .login {
   padding: 5em 3em 0;
-}
-body {
   background-color: var(--light);
+}
+
+.form-btns {
+  text-align: center;
+}
+
+#waifu {
+  position: absolute;
+  right: 3em;
+  bottom: 3em;
+  height: 30vh;
+  width: 30vh;
 }
 </style>
