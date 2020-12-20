@@ -49,55 +49,12 @@ export default {
 </script>
 
 <style>
-* {
-  font-family: "HomepageBaukasten-bold";
-}
-
 #app {
   overflow-x: hidden;
-}
-
-@font-face {
-  font-family: "HomepageBaukasten";
-  src: local("HomepageBaukasten"),
-    url(./assets/fonts/HomepageBaukasten-Book.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "HomepageBaukasten-bold";
-  src: local("HomepageBaukasten-bold"),
-    url(./assets/fonts/HomepageBaukasten-Bold.ttf) format("truetype");
-}
-
-.tab-title {
-  font-size: 3vh;
-  font-weight: bold;
 }
 
 table.table-hover tbody tr:hover {
   background-color: var(--red);
   color: var(--light);
 }
-
-body {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  font-family: "Lato";
-  height: 100%;
-  background: var(--light);
-}
-
-@media (max-width: 991px) {
-  .hide-sm {
-    display: none;
-  }
-}
-
-@media (min-width: 992px) {
-  .hide-lg {
-    display: none !important;
-  }
-}
 </style>
-
