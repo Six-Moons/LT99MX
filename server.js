@@ -15,22 +15,27 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const users = require('./queries/users')
+const usuarios = require('./queries/usuarios')
 const port = 3000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
+    response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-// User endpoints
-app.get('/users',         users.getUsers)
-app.get('/users/:id',     users.getUserById)
-app.post('/users',        users.createUser)
-app.put('/users/:id',     users.updateUser)
-app.delete('/users/:id',  users.deleteUser)
+// Endpoints de usuarios
+app.get   ('/usuarios',             usuarios.conseguirUsuarios)
+app.get   ('/usuarios/:username',   usuarios.conseguirUsuarioPorUsername)
+app.post  ('/usuarios',             usuarios.crearUsuario)
+app.put   ('/usuarios/:username',   usuarios.actualizarUsuario)
+app.delete('/usuarios/:username',   usuarios.borrarUsuario)
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
