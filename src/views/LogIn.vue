@@ -3,71 +3,83 @@
     <div class="row">
       <div class="col-sm">
         <h2>Crear Cuenta</h2>
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-          <b-form-group id="input-group-1" label="Correo:" label-for="input-1">
+        <b-form @submit="registrationSubmit">
+          <b-form-group
+            id="registration-email-group"
+            label="Correo:"
+            label-for="registration-email"
+          >
             <b-form-input
-              id="input-1"
-              v-model="form.email"
+              id="registration-email"
+              v-model="registrationData.email"
               type="email"
               placeholder="correo@ejemplo.com"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label="Nombre:" label-for="input-2">
+          <b-form-group
+            id="registration-name-group"
+            label="Nombre:"
+            label-for="registration-name"
+          >
             <b-form-input
-              id="input-2"
-              v-model="form.name"
+              id="registration-name"
+              v-model="registrationData.name"
               placeholder="Nombre(s)"
               required
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
-            id="input-group-3"
+            id="registration-username-group"
             label="Nombre de usuario:"
-            label-for="input-3"
+            label-for="registration-username"
           >
             <b-form-input
-              id="input-3"
+              id="registration-username"
               placeholder="Nombre de usuario"
-              v-model="form.username"
+              v-model="registrationData.username"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-6" label="Estado:" label-for="input-6">
+          <b-form-group
+            id="registration-state-group"
+            label="Estado:"
+            label-for="registration-state"
+          >
             <b-form-select
-              id="input-6"
-              v-model="form.state"
+              id="registration-state"
+              v-model="registrationData.state"
               :options="stateOptions"
               required
             ></b-form-select>
           </b-form-group>
 
           <b-form-group
-            id="input-group-4"
+            id="registration-password-group"
             label="Contraseña:"
-            label-for="input-4"
+            label-for="registration-password"
           >
             <b-form-input
-              id="input-4"
+              id="registration-password"
               placeholder="Contraseña"
-              v-model="form.password"
+              v-model="registrationData.password"
               type="password"
               required
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
-            id="input-group-5"
+            id="registration-password-confirmation-group"
             label="Confirmar contraseña:"
-            label-for="input-5"
+            label-for="registration-password-confirmation"
           >
             <b-form-input
-              id="input-5"
+              id="registration-password-confirmation"
               placeholder="Confirmar contraseña"
-              v-model="form.passwordConf"
+              v-model="registrationData.passwordConfirmation"
               type="password"
               required
             ></b-form-input>
@@ -80,11 +92,15 @@
       </div>
       <div class="col-sm">
         <h2>Iniciar Sesión</h2>
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-          <b-form-group id="input-group-1" label="Correo:" label-for="input-1">
+        <b-form @submit="loginSubmit">
+          <b-form-group
+            id="login-email-group"
+            label="Correo:"
+            label-for="login-email"
+          >
             <b-form-input
-              id="input-1"
-              v-model="form.email"
+              id="login-email"
+              v-model="loginData.email"
               type="email"
               placeholder="correo@ejemplo.com"
               required
@@ -92,14 +108,14 @@
           </b-form-group>
 
           <b-form-group
-            id="input-group-4"
+            id="login-password-group"
             label="Contraseña:"
-            label-for="input-4"
+            label-for="login-password"
           >
             <b-form-input
-              id="input-4"
+              id="login-password"
               placeholder="Contraseña"
-              v-model="form.password"
+              v-model="loginData.password"
               type="password"
               required
             ></b-form-input>
@@ -111,11 +127,7 @@
         </b-form>
       </div>
       <div id="waifu">
-        <img
-          :src="imgs[Math.floor(Math.random() * imgs.length)]"
-          alt="Image related to Tetris"
-          class="img-fluid"
-        />
+        <img :src="img.src" :alt="img.alt" class="img-fluid" />
       </div>
     </div>
   </div>
@@ -126,13 +138,18 @@ export default {
   name: "LogIn",
   data() {
     return {
-      form: {
+      name: "",
+      registrationData: {
         email: "",
         name: "",
         username: "",
         state: null,
         password: "",
-        passwordConf: "",
+        passwordConfirmation: "",
+      },
+      loginData: {
+        email: "",
+        password: "",
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
@@ -170,33 +187,27 @@ export default {
         "Zacatecas",
         "Otro",
       ],
-      show: true,
       imgs: [
-        require("@/assets/imgs/schezo.png"),
-        require("@/assets/imgs/arle.png"),
-        require("@/assets/imgs/feli.png"),
-        require("@/assets/imgs/rulue.png"),
+        { src: require("@/assets/imgs/schezo.png"), alt: "Imagen de Schezo" },
+        { src: require("@/assets/imgs/arle.png"), alt: "Imagen de Arle" },
+        { src: require("@/assets/imgs/feli.png"), alt: "Imagen de Feli" },
+        { src: require("@/assets/imgs/rulue.png"), alt: "Imagen de Rulue" },
       ],
+      img: "",
     };
   },
   methods: {
-    onSubmit(event) {
+    registrationSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      console.log(JSON.stringify(this.registrationData));
     },
-    onReset(event) {
+    loginSubmit(event) {
       event.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+      console.log(JSON.stringify(this.loginData));
     },
+  },
+  mounted() {
+    this.img = this.imgs[Math.floor(Math.random() * this.imgs.length)];
   },
 };
 </script>
