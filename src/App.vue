@@ -4,7 +4,7 @@
       toggleable="lg"
       type="light"
       variant="light"
-      class="hide-lg"
+      class="show-xs"
       fixed="top"
     >
       <b-navbar-brand to="/">LT99MX</b-navbar-brand>
@@ -33,8 +33,11 @@
       </b-collapse>
     </b-navbar>
     <div class="row">
-      <left-panel class="col-3 hide-sm" :session="loggedIn"></left-panel>
-      <router-view class="col-lg-9" />
+      <left-panel
+        class="col-1 col-xl-3 bg-dark hide-xs"
+        :session="loggedIn"
+      ></left-panel>
+      <router-view class="col-sm-11 col-xl-9" />
     </div>
   </div>
 </template>

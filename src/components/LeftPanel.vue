@@ -1,5 +1,5 @@
 <template>
-  <div class="left-panel">
+  <div id="left-panel">
     <div class="logo-div">
       <img
         src="../assets/logo.png"
@@ -7,114 +7,63 @@
         class="img-fluid"
       />
     </div>
-    <ul class="nav-sidebar list-unstyled panel-nav">
-      <router-link to="/" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="red">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Tetris
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/rankings" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="orange">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Rankings
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/noticias" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="yellow">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Noticias
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/faq" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="green">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            FAQ/Comentarios
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/donaciones" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="blue">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Donaciones
-          </a>
-        </li>
-      </router-link>
-      <router-link
-        v-if="session"
+    <b-nav vertical id="nav">
+      <b-nav-item
+        exact-active-class="active"
+        to="/"
+        link-classes="red text-light"
+      >
+        <div><tetromino :href="svgs.Z"></tetromino> Tetris</div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/rankings"
+        link-classes="orange text-light"
+      >
+        <div><tetromino :href="svgs.L"></tetromino> Rankings</div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active text-dark"
+        to="/noticias"
+        link-classes="yellow text-light"
+      >
+        <div><tetromino :href="svgs.O"></tetromino> Noticias</div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/faq"
+        link-classes="green text-light"
+      >
+        <div><tetromino :href="svgs.S"></tetromino> FAQ/Comentarios</div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/donaciones"
+        link-classes="blue text-light"
+      >
+        <div><tetromino :href="svgs.J"></tetromino> Donaciones</div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
         to="/mi-cuenta"
-        v-slot="{ href, navigate, isExactActive }"
+        link-classes="purple text-light"
+        v-show="session"
       >
-        <li :class="[isExactActive && 'active']" class="purple">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Mi cuenta
-          </a>
-        </li>
-      </router-link>
-      <router-link
-        v-if="!session"
+        <div id="mi-cuenta-link">
+          <tetromino :href="svgs.T"></tetromino> Mi cuenta
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
         to="/log-in"
-        v-slot="{ href, navigate, isExactActive }"
+        link-classes="purple text-light"
+        v-show="!session"
       >
-        <li :class="[isExactActive && 'active']" class="purple">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Iniciar sesión
-          </a>
-        </li>
-      </router-link>
-    </ul>
+        <div id="iniciar-sesion-link">
+          <tetromino :href="svgs.T"></tetromino> Iniciar sesión
+        </div>
+      </b-nav-item>
+    </b-nav>
     <div class="logout">
       <a class="btn btn-lg btn-danger logout-btn" href="#Logout"
         >Cerrar Sesión</a
@@ -124,16 +73,35 @@
 </template>
 
 <script>
+import Tetromino from "./Tetromino.vue";
 export default {
+  components: { Tetromino },
   name: "LeftPanel",
   props: ["session"],
+  data() {
+    return {
+      svgs: {
+        Z:
+          "https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg",
+        L:
+          "https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg",
+        O:
+          "https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg",
+        S:
+          "https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg",
+        J:
+          "https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg",
+        T:
+          "https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg",
+      },
+    };
+  },
 };
 </script>
 
 <style scoped>
-.logout-btn {
-  border-radius: 9999px;
-  width: 100%;
+#left-panel {
+  height: 100vh;
 }
 
 .logo-div {
@@ -143,96 +111,99 @@ export default {
   margin-top: 1em;
 }
 
-.red.active,
-.red:hover {
-  background-color: var(--red);
-  border-radius: 9999px;
-}
-
-.orange.active,
-.orange:hover {
-  background-color: var(--orange);
-  border-radius: 9999px;
-}
-
-.yellow.active,
-.yellow:hover,
-.yellow.active > a,
-.yellow:hover > a {
-  background-color: var(--yellow);
-  color: var(--dark);
-  border-radius: 9999px;
-}
-
-.green.active,
-.green:hover {
-  background-color: var(--green);
-  border-radius: 9999px;
-}
-
-.blue.active,
-.blue:hover {
-  background-color: var(--blue);
-  border-radius: 9999px;
-}
-
-.purple.active,
-.purple:hover {
-  background-color: var(--purple);
-  border-radius: 9999px;
-}
-
-.left-panel {
-  font-family: "HomepageBaukasten-bold";
-  height: 100vh;
-  transition: all 0.3s;
-  background-color: var(--dark);
-}
-
-li {
-  width: 24vw;
-  margin-left: 0em;
-}
-
-ul.panel-nav {
-  list-style-type: none;
-}
-
-ul.logout {
-  list-style-type: none;
-}
-
-ul.panel-nav > li > a {
-  text-decoration: none;
-  font-size: 3vh;
-  display: block;
-  padding-bottom: 0.5em;
-  padding-left: 1em;
-  color: var(--light);
-}
-
-a,
-a:hover,
-a:focus {
-  /* color: inherit; */
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.panel-nav {
-  padding-top: 5%;
-}
-
 .logout {
   position: fixed;
   bottom: 1rem;
   font-size: 1.5rem;
   color: #fff;
-  width: 11rem;
-  margin-left: calc(12.5vw - 6rem);
+  margin-left: calc(12.5vw - 4em);
+  /* text-align: center; */
 }
 
-a:hover > .rotate {
+.logout-btn {
+  border-radius: 9999px;
+  width: 9em;
+}
+
+#nav {
+  font-size: 1.7vw;
+  color: var(--light);
+  margin-left: 3vw;
+}
+
+.red > div {
+  width: 9vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.red > div,
+.active.red > div {
+  background-color: var(--red);
+}
+
+.orange > div {
+  width: 12vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.orange > div,
+.active.orange > div {
+  background-color: var(--orange);
+}
+
+.yellow > div {
+  width: 11vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.yellow > div,
+.active.yellow > div {
+  background-color: var(--yellow);
+}
+
+.green > div {
+  width: 19.5vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.green > div,
+.active.green > div {
+  background-color: var(--green);
+}
+
+.blue > div {
+  width: 14.5vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.blue > div,
+.active.blue > div {
+  background-color: var(--blue);
+}
+
+#mi-cuenta-link {
+  width: 12.5vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#iniciar-sesion-link {
+  width: 15.5vw;
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+#nav li:hover > a.purple > div,
+.active.purple > div {
+  background-color: var(--purple);
+}
+
+#nav li:hover > a > div > .rotate {
   animation: 0.5s linear 0s 1 normal rotate_tetromino;
 }
 

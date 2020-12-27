@@ -39,8 +39,26 @@ body {
   font-weight: bold;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 575px) {
+  .hide-xs {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) {
+  .show-xs {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
   .hide-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .hide-md {
     display: none;
   }
 }
@@ -50,3 +68,7 @@ body {
     display: none !important;
   }
 }
+
+// #nav li:hover {
+//   background-color: $green;
+// }
