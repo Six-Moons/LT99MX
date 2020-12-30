@@ -69,6 +69,18 @@ body {
   }
 }
 
+@media (min-width: 1200px) {
+  .hide-xl {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .show-xl {
+    display: none;
+  }
+}
+
 // #nav li:hover {
 //   background-color: $green;
 // }

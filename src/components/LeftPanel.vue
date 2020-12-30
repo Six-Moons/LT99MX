@@ -8,66 +8,95 @@
       />
     </div>
     <b-nav vertical id="nav">
-      <b-nav-item
-        exact-active-class="active"
-        to="/"
-        link-classes="red text-light"
-      >
-        <div><tetromino :href="svgs.Z"></tetromino> Tetris</div>
+      <b-nav-item exact-active-class="active" to="/" link-classes="text-light">
+        <div class="nav-div red show-xl">
+          <tetromino :href="svgs.Z"></tetromino> Tetris
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-house-fill class="nav-icon i-red"></b-icon-house-fill>
+        </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active"
         to="/rankings"
-        link-classes="orange text-light"
+        link-classes="text-light"
       >
-        <div><tetromino :href="svgs.L"></tetromino> Rankings</div>
+        <div class="nav-div orange show-xl">
+          <tetromino :href="svgs.L"></tetromino> Rankings
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-trophy-fill class="nav-icon i-orange"></b-icon-trophy-fill>
+        </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active text-dark"
         to="/noticias"
-        link-classes="yellow text-light"
+        link-classes="text-light"
       >
-        <div><tetromino :href="svgs.O"></tetromino> Noticias</div>
+        <div class="nav-div yellow show-xl">
+          <tetromino :href="svgs.O"></tetromino> Noticias
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-newspaper class="nav-icon i-yellow"></b-icon-newspaper>
+        </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active"
         to="/faq"
-        link-classes="green text-light"
+        link-classes="text-light"
       >
-        <div><tetromino :href="svgs.S"></tetromino> FAQ/Comentarios</div>
+        <div class="nav-div green show-xl">
+          <tetromino :href="svgs.S"></tetromino> FAQ/Comentarios
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-question class="nav-icon i-green"></b-icon-question>
+        </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active"
         to="/donaciones"
-        link-classes="blue text-light"
+        link-classes="text-light"
       >
-        <div><tetromino :href="svgs.J"></tetromino> Donaciones</div>
+        <div class="nav-div blue show-xl">
+          <tetromino :href="svgs.J"></tetromino> Donaciones
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-credit-card-fill
+            class="nav-icon i-blue"
+          ></b-icon-credit-card-fill>
+        </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active"
         to="/mi-cuenta"
-        link-classes="purple text-light"
+        link-classes="text-light"
         v-show="session"
       >
-        <div id="mi-cuenta-link">
+        <div id="mi-cuenta-link" class="nav-div purple show-xl">
           <tetromino :href="svgs.T"></tetromino> Mi cuenta
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-person-fill class="nav-icon i-purple"></b-icon-person-fill>
         </div>
       </b-nav-item>
       <b-nav-item
         exact-active-class="active"
         to="/log-in"
-        link-classes="purple text-light"
+        link-classes="text-light"
         v-show="!session"
       >
-        <div id="iniciar-sesion-link">
+        <div id="iniciar-sesion-link" class="nav-div purple show-xl">
           <tetromino :href="svgs.T"></tetromino> Iniciar sesión
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-person-fill class="nav-icon i-purple"></b-icon-person-fill>
         </div>
       </b-nav-item>
     </b-nav>
-    <div class="logout">
-      <a class="btn btn-lg btn-danger logout-btn" href="#Logout"
-        >Cerrar Sesión</a
-      >
+    <div class="show-xl logout">
+      <a class="btn btn-lg btn-danger logout-btn" href="#Logout">
+        Cerrar Sesión
+      </a>
     </div>
   </div>
 </template>
@@ -104,9 +133,17 @@ export default {
   height: 100vh;
 }
 
+@media (min-width: 1200px) {
+  #nav {
+    font-size: 1.7vw;
+    color: var(--light);
+    margin-left: 3vw;
+  }
+}
+
 .logo-div {
-  width: 5vh;
-  height: 5vh;
+  width: 3.4vw;
+  height: 3.4vw;
   margin-left: 2.5vh;
   margin-top: 1em;
 }
@@ -125,82 +162,103 @@ export default {
   width: 9em;
 }
 
-#nav {
-  font-size: 1.7vw;
-  color: var(--light);
-  margin-left: 3vw;
-}
-
-.red > div {
-  width: 9vw;
+.nav-div {
   border-radius: 9999px;
   padding-left: 0.5em;
 }
 
-#nav li:hover > a.red > div,
-.active.red > div {
+.nav-icon {
+  width: 3.4vw;
+  height: 3.4vw;
+}
+
+.red {
+  width: 9vw;
+}
+
+#nav li:hover > a > .red,
+.active > .red {
   background-color: var(--red);
 }
 
-.orange > div {
-  width: 12vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
+#nav li:hover > a > div > .i-red,
+.active > div > .i-red {
+  fill: var(--red);
 }
 
-#nav li:hover > a.orange > div,
-.active.orange > div {
+.orange {
+  width: 12vw;
+}
+
+#nav li:hover > a > .orange,
+.active > .orange {
   background-color: var(--orange);
 }
 
-.yellow > div {
+#nav li:hover > a > div > .i-orange,
+.active > div > .i-orange {
+  fill: var(--orange);
+}
+
+.yellow {
   width: 11vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
 }
 
-#nav li:hover > a.yellow > div,
-.active.yellow > div {
+#nav li:hover > a > .yellow,
+.active > .yellow {
   background-color: var(--yellow);
+  color: var(--dark);
 }
 
-.green > div {
+#nav li:hover > a > div > .i-yellow,
+.active > div > .i-yellow {
+  fill: var(--yellow);
+}
+
+.green {
   width: 19.5vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
 }
 
-#nav li:hover > a.green > div,
-.active.green > div {
+#nav li:hover > a > .green,
+.active > .green {
   background-color: var(--green);
 }
 
-.blue > div {
-  width: 14.5vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
+#nav li:hover > a > div > .i-green,
+.active > div > .i-green {
+  fill: var(--green);
 }
 
-#nav li:hover > a.blue > div,
-.active.blue > div {
+.blue {
+  width: 14.5vw;
+}
+
+#nav li:hover > a > .blue,
+.active > .blue {
   background-color: var(--blue);
+}
+
+#nav li:hover > a > div > .i-blue,
+.active > div > .i-blue {
+  fill: var(--blue);
 }
 
 #mi-cuenta-link {
   width: 12.5vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
 }
 
 #iniciar-sesion-link {
   width: 15.5vw;
-  border-radius: 9999px;
-  padding-left: 0.5em;
 }
 
-#nav li:hover > a.purple > div,
-.active.purple > div {
+#nav li:hover > a > .purple,
+.active > .purple {
   background-color: var(--purple);
+}
+
+#nav li:hover > a > div > .i-purple,
+.active > div > .i-purple {
+  fill: var(--purple);
 }
 
 #nav li:hover > a > div > .rotate {
