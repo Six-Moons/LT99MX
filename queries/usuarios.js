@@ -1,6 +1,7 @@
 const {pool} = require('./pool_config');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const saltRounds = 2;
 
 const tablaUsuarios = 'usuarios'
@@ -40,8 +41,9 @@ const login = (request, response) => {
     }
 
     let loginUsuario = ((username) ? 'username' : 'correo')
+    let varLogin = ((username) ? username : correo);
 
-    pool.query(`SELECT * FROM ${tablaUsuarios} WHERE ${loginUsuario} = $1`, [((username) ? username : correo)], 
+    pool.query(`SELECT * FROM ${tablaUsuarios} WHERE ${loginUsuario} = $1`, [varLogin], 
     (error, results) => {
         if (error) {
             console.log(error);
@@ -51,13 +53,29 @@ const login = (request, response) => {
                 status : statusCode,
                 message : response.statusMessage
             })
-        }
-        if (results.rows.length) {
+        } else if (results.rows.length) {
             bcrypt.compare(contrasenia, results.rows[0].contrasenia, function(err, result) {
                 if (result) {
-                    response.status(201).json({
-                        message: `Login correcto de: ${((username) ? username : correo)}`,
-                    })
+                    const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0]
+                    let user = {username, soiadmin, nombre, estado, insigniafavorita};
+                    jwt.sign({user}, 'secretkey', (error, token) => {
+                        if (error) {
+                            console.log(error);
+                            // response.statusMessage = error;
+                            response.statusMessage = 'Error con JWT';
+                            let statusCode = 408;
+                            return response.status( statusCode ).json({
+                                status: statusCode,
+                                message: response.statusMessage,
+                                error
+                            })
+                        } else {
+                            response.status(200).json({
+                                message: `Login correcto de: ${varLogin}`,
+                                token
+                            });
+                        }
+                    });
                 } else {
                     response.statusMessage = 'Usuario/correo y contraseña incorrectos';
                     let statusCode = 402;
@@ -106,19 +124,29 @@ const crearUsuario = (request, response) => {
 }
 
 const actualizarUsuario = (request, response) => {
-    const username = parseInt(request.params.username)
-    const {nombre, estado, foto, descripcion} = request.body
-
-    pool.query(
-        `UPDATE ${tablaUsuarios} SET nombre = $1, estado = $2, foto = $3, descripcion = $4 WHERE username = $5`,
-        [nombre, estado, foto, descripcion, username],
-        (error, results) => {
-            if (error) {
-                throw error
-            }
-            response.status(200).send(`User modified with username: ${username}`)
+    jwt.verify(request.token, 'secretkey', (err, authData) => {
+        if(err) {
+            response.sendStatus(403);
+        } else {
+            response.status(200).json({
+                message: `User modified with username`,
+                authData
+            });
         }
-    )
+    });
+    // const username = parseInt(request.params.username)
+    // const {nombre, estado, foto, descripcion} = request.body
+
+    // pool.query(
+    //     `UPDATE ${tablaUsuarios} SET nombre = $1, estado = $2, foto = $3, descripcion = $4 WHERE username = $5`,
+    //     [nombre, estado, foto, descripcion, username],
+    //     (error, results) => {
+    //         if (error) {
+    //             throw error
+    //         }
+    //         response.status(200).send(`User modified with username: ${username}`)
+    //     }
+    // )
 }
 
 const borrarUsuario = (request, response) => {
@@ -131,7 +159,6 @@ const borrarUsuario = (request, response) => {
         response.status(200).send(`User deleted with username: ${username}`)
     })
 }
-
 module.exports = {
     conseguirUsuarios,
     conseguirUsuarioPorUsername,
