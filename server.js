@@ -33,6 +33,7 @@ app.get('/', (request, response) => {
 // Endpoints de usuarios
 app.get   ('/usuarios/conseguirUsuarios',           usuarios.conseguirUsuarios)
 app.get   ('/usuarios/conseguirUsuario/:username',  usuarios.conseguirUsuarioPorUsername)
+app.post  ('/usuarios/login',                       usuarios.login)
 app.post  ('/usuarios/crearUsuario',                usuarios.crearUsuario)
 app.put   ('/usuarios/actualizarUsuario/:username', usuarios.actualizarUsuario)
 app.delete('/usuarios/borrarUsuario/:username',     usuarios.borrarUsuario)
