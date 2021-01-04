@@ -31,11 +31,11 @@ app.get('/', (request, response) => {
 })
 
 // Endpoints de usuarios
-app.get   ('/usuarios',             usuarios.conseguirUsuarios)
-app.get   ('/usuarios/:username',   usuarios.conseguirUsuarioPorUsername)
-app.post  ('/usuarios',             usuarios.crearUsuario)
-app.put   ('/usuarios/:username',   usuarios.actualizarUsuario)
-app.delete('/usuarios/:username',   usuarios.borrarUsuario)
+app.get   ('/usuarios/conseguirUsuarios',           usuarios.conseguirUsuarios)
+app.get   ('/usuarios/conseguirUsuario/:username',  usuarios.conseguirUsuarioPorUsername)
+app.post  ('/usuarios/crearUsuario',                usuarios.crearUsuario)
+app.put   ('/usuarios/actualizarUsuario/:username', usuarios.actualizarUsuario)
+app.delete('/usuarios/borrarUsuario/:username',     usuarios.borrarUsuario)
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
