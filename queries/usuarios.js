@@ -2,7 +2,7 @@ const {pool} = require('./pool_config');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const saltRounds = 2;
+let {SECRET_KEY, SALT_ROUNDS} = require('./../config');
 
 const tablaUsuarios = 'usuarios'
 const infoUsuario = 'userName, nombre, estado, foto, descripcion, insigniaFavorita';
@@ -58,7 +58,7 @@ const login = (request, response) => {
                 if (result) {
                     const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0]
                     let user = {username, soiadmin, nombre, estado, insigniafavorita};
-                    jwt.sign({user}, 'secretkey', (error, token) => {
+                    jwt.sign({user}, SECRET_KEY, (error, token) => {
                         if (error) {
                             console.log(error);
                             // response.statusMessage = error;
@@ -104,7 +104,7 @@ const crearUsuario = (request, response) => {
     let soiAdmin = false;
     let userID = uuidv4();
     let fotoPath = 'path/to/file';
-    bcrypt.hash(contrasenia, saltRounds, function(err, hash) {
+    bcrypt.hash(contrasenia, SALT_ROUNDS, function(err, hash) {
         let contraseniaEncriptada = hash;
         pool.query(`INSERT INTO ${tablaUsuarios} (${camposTablaUsuarios}) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, [userID, soiAdmin, username, correo, contraseniaEncriptada, nombre, estado, fotoPath, descripcion], 
         (error, results) => {
@@ -124,7 +124,7 @@ const crearUsuario = (request, response) => {
 }
 
 const actualizarUsuario = (request, response) => {
-    jwt.verify(request.token, 'secretkey', (err, authData) => {
+    jwt.verify(request.token, SECRET_KEY, (err, authData) => {
         if(err) {
             response.sendStatus(403);
         } else {
