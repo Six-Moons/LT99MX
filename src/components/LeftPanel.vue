@@ -1,5 +1,5 @@
 <template>
-  <div class="left-panel">
+  <div id="left-panel">
     <div class="logo-div">
       <img
         src="../assets/logo.png"
@@ -7,209 +7,261 @@
         class="img-fluid"
       />
     </div>
-    <ul class="nav-sidebar list-unstyled panel-nav">
-      <router-link to="/" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="red">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Tetris
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/rankings" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="orange">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Rankings
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/noticias" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="yellow">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Noticias
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/faq" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="green">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            FAQ/Comentarios
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/donaciones" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="blue">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Donaciones
-          </a>
-        </li>
-      </router-link>
-      <router-link to="/mi-cuenta" v-slot="{ href, navigate, isExactActive }">
-        <li :class="[isExactActive && 'active']" class="purple">
-          <a :href="href" @click="navigate">
-            <svg width="1em" height="1em" class="rotate">
-              <image
-                xlink:href="https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg"
-                width="1em"
-                height="1em"
-              />
-            </svg>
-            Mi cuenta
-          </a>
-        </li>
-      </router-link>
-    </ul>
-    <div class="logout">
-      <a class="btn btn-lg btn-danger logout-btn" href="#Logout"
-        >Cerrar Sesión</a
+    <b-nav vertical id="nav">
+      <b-nav-item exact-active-class="active" to="/" link-classes="text-light">
+        <div class="nav-div red show-xl">
+          <tetromino :href="svgs.Z"></tetromino> Tetris
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-house-fill class="nav-icon i-red"></b-icon-house-fill>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/rankings"
+        link-classes="text-light"
       >
+        <div class="nav-div orange show-xl">
+          <tetromino :href="svgs.L"></tetromino> Rankings
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-trophy-fill class="nav-icon i-orange"></b-icon-trophy-fill>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active text-dark"
+        to="/noticias"
+        link-classes="text-light"
+      >
+        <div class="nav-div yellow show-xl">
+          <tetromino :href="svgs.O"></tetromino> Noticias
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-newspaper class="nav-icon i-yellow"></b-icon-newspaper>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/faq"
+        link-classes="text-light"
+      >
+        <div class="nav-div green show-xl">
+          <tetromino :href="svgs.S"></tetromino> FAQ/Comentarios
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-question class="nav-icon i-green"></b-icon-question>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/donaciones"
+        link-classes="text-light"
+      >
+        <div class="nav-div blue show-xl">
+          <tetromino :href="svgs.J"></tetromino> Donaciones
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-credit-card-fill
+            class="nav-icon i-blue"
+          ></b-icon-credit-card-fill>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/mi-cuenta"
+        link-classes="text-light"
+        v-show="session"
+      >
+        <div id="mi-cuenta-link" class="nav-div purple show-xl">
+          <tetromino :href="svgs.T"></tetromino> Mi cuenta
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-person-fill class="nav-icon i-purple"></b-icon-person-fill>
+        </div>
+      </b-nav-item>
+      <b-nav-item
+        exact-active-class="active"
+        to="/log-in"
+        link-classes="text-light"
+        v-show="!session"
+      >
+        <div id="iniciar-sesion-link" class="nav-div purple show-xl">
+          <tetromino :href="svgs.T"></tetromino> Iniciar sesión
+        </div>
+        <div class="hide-xs hide-xl">
+          <b-icon-person-fill class="nav-icon i-purple"></b-icon-person-fill>
+        </div>
+      </b-nav-item>
+    </b-nav>
+    <div class="show-xl logout">
+      <a class="btn btn-lg btn-danger logout-btn" href="#Logout">
+        Cerrar Sesión
+      </a>
     </div>
   </div>
 </template>
 
 <script>
+import Tetromino from "./Tetromino.vue";
 export default {
+  components: { Tetromino },
   name: "LeftPanel",
+  props: ["session"],
+  data() {
+    return {
+      svgs: {
+        Z:
+          "https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg",
+        L:
+          "https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg",
+        O:
+          "https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg",
+        S:
+          "https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg",
+        J:
+          "https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg",
+        T:
+          "https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg",
+      },
+    };
+  },
 };
 </script>
 
 <style scoped>
-.logout-btn {
-  border-radius: 9999px;
-  width: 100%;
+#left-panel {
+  height: 100vh;
+}
+
+@media (min-width: 1200px) {
+  #nav {
+    font-size: 1.7vw;
+    color: var(--light);
+    margin-left: 3vw;
+  }
 }
 
 .logo-div {
-  width: 5vh;
-  height: 5vh;
+  width: 3.4vw;
+  height: 3.4vw;
   margin-left: 2.5vh;
   margin-top: 1em;
 }
 
-.red.active,
-.red:hover {
-  background-color: var(--red);
-  border-radius: 9999px;
-}
-
-.orange.active,
-.orange:hover {
-  background-color: var(--orange);
-  border-radius: 9999px;
-}
-
-.yellow.active,
-.yellow:hover,
-.yellow.active > a,
-.yellow:hover > a {
-  background-color: var(--yellow);
-  color: var(--dark);
-  border-radius: 9999px;
-}
-
-.green.active,
-.green:hover {
-  background-color: var(--green);
-  border-radius: 9999px;
-}
-
-.blue.active,
-.blue:hover {
-  background-color: var(--blue);
-  border-radius: 9999px;
-}
-
-.purple.active,
-.purple:hover {
-  background-color: var(--purple);
-  border-radius: 9999px;
-}
-
-.left-panel {
-  font-family: "HomepageBaukasten-bold";
-  height: 100vh;
-  transition: all 0.3s;
-  background-color: var(--dark);
-}
-
-li {
-  width: 24vw;
-  margin-left: 0em;
-}
-
-ul.panel-nav {
-  list-style-type: none;
-}
-
-ul.logout {
-  list-style-type: none;
-}
-
-ul.panel-nav > li > a {
-  text-decoration: none;
-  font-size: 3vh;
-  display: block;
-  padding-bottom: 0.5em;
-  padding-left: 1em;
-  color: var(--light);
-}
-
-a,
-a:hover,
-a:focus {
-  /* color: inherit; */
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.panel-nav {
-  padding-top: 5%;
-}
-
 .logout {
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
   font-size: 1.5rem;
   color: #fff;
-  width: 11rem;
-  margin-left: calc(12.5vw - 6rem);
+  margin-left: calc(12.5vw - 4em);
+  /* text-align: center; */
 }
 
-a:hover > .rotate {
+.logout-btn {
+  border-radius: 9999px;
+  width: 9em;
+}
+
+.nav-div {
+  border-radius: 9999px;
+  padding-left: 0.5em;
+}
+
+.nav-icon {
+  width: 3.4vw;
+  height: 3.4vw;
+}
+
+.red {
+  width: 9vw;
+}
+
+#nav li:hover > a > .red,
+.active > .red {
+  background-color: var(--red);
+}
+
+#nav li:hover > a > div > .i-red,
+.active > div > .i-red {
+  fill: var(--red);
+}
+
+.orange {
+  width: 12vw;
+}
+
+#nav li:hover > a > .orange,
+.active > .orange {
+  background-color: var(--orange);
+}
+
+#nav li:hover > a > div > .i-orange,
+.active > div > .i-orange {
+  fill: var(--orange);
+}
+
+.yellow {
+  width: 11vw;
+}
+
+#nav li:hover > a > .yellow,
+.active > .yellow {
+  background-color: var(--yellow);
+  color: var(--dark);
+}
+
+#nav li:hover > a > div > .i-yellow,
+.active > div > .i-yellow {
+  fill: var(--yellow);
+}
+
+.green {
+  width: 19.5vw;
+}
+
+#nav li:hover > a > .green,
+.active > .green {
+  background-color: var(--green);
+}
+
+#nav li:hover > a > div > .i-green,
+.active > div > .i-green {
+  fill: var(--green);
+}
+
+.blue {
+  width: 14.5vw;
+}
+
+#nav li:hover > a > .blue,
+.active > .blue {
+  background-color: var(--blue);
+}
+
+#nav li:hover > a > div > .i-blue,
+.active > div > .i-blue {
+  fill: var(--blue);
+}
+
+#mi-cuenta-link {
+  width: 12.5vw;
+}
+
+#iniciar-sesion-link {
+  width: 15.5vw;
+}
+
+#nav li:hover > a > .purple,
+.active > .purple {
+  background-color: var(--purple);
+}
+
+#nav li:hover > a > div > .i-purple,
+.active > div > .i-purple {
+  fill: var(--purple);
+}
+
+#nav li:hover > a > div > .rotate {
   animation: 0.5s linear 0s 1 normal rotate_tetromino;
 }
 

@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Profile from '../views/Profile.vue'
+import Profile from '../views/Profile.vue';
+import Rankings from '../views/Rankings.vue';
+import LogIn from '../views/LogIn.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,16 @@ const routes = [
     path: '/mi-cuenta',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/rankings',
+    name: 'Rankings',
+    component: Rankings
+  },
+  {
+    path: '/log-in',
+    name: 'Log In',
+    component: LogIn
   }
 ];
 

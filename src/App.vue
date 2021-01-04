@@ -4,7 +4,7 @@
       toggleable="lg"
       type="light"
       variant="light"
-      class="hide-lg"
+      class="show-xs"
       fixed="top"
     >
       <b-navbar-brand to="/">LT99MX</b-navbar-brand>
@@ -33,8 +33,11 @@
       </b-collapse>
     </b-navbar>
     <div class="row">
-      <left-panel class="col-3 hide-sm"></left-panel>
-      <router-view class="col-lg-9" />
+      <left-panel
+        class="col-1 col-xl-3 bg-dark hide-xs"
+        :session="loggedIn"
+      ></left-panel>
+      <router-view class="col-sm-11 col-xl-9" />
     </div>
   </div>
 </template>
@@ -45,44 +48,21 @@ import LeftPanel from "./components/LeftPanel.vue";
 export default {
   name: "App",
   components: { LeftPanel },
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
 };
 </script>
+
 <style>
 #app {
   overflow-x: hidden;
 }
 
-@font-face {
-  font-family: "HomepageBaukasten";
-  src: local("HomepageBaukasten"),
-    url(./assets/fonts/HomepageBaukasten-Book.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "HomepageBaukasten-bold";
-  src: local("HomepageBaukasten-bold"),
-    url(./assets/fonts/HomepageBaukasten-Bold.ttf) format("truetype");
-}
-
-body {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  font-family: "Lato";
-  height: 100%;
-  background: var(--light);
-}
-
-@media (max-width: 991px) {
-  .hide-sm {
-    display: none;
-  }
-}
-
-@media (min-width: 992px) {
-  .hide-lg {
-    display: none !important;
-  }
+table.table-hover tbody tr:hover {
+  background-color: var(--red);
+  color: var(--light);
 }
 </style>
-

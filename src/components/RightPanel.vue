@@ -4,8 +4,8 @@
     <top-3-table :title="'Top 3 Liga B'" :data="rankLigaB"></top-3-table>
     <hr />
     <img
-      src="https://image.shutterstock.com/z/stock-vector-your-ad-here-grunge-stamp-with-on-vector-illustration-196566251.jpg"
-      alt="Ad placeholder"
+      :src="imgs[Math.floor(Math.random() * imgs.length)]"
+      alt="Image related to Tetris"
     />
   </div>
 </template>
@@ -27,6 +27,12 @@ export default {
         { nombre: "Player 5", puntos: 92 },
         { nombre: "Player 6", puntos: 87 },
       ],
+      imgs: [
+        require("@/assets/imgs/schezo.png"),
+        require("@/assets/imgs/arle.png"),
+        require("@/assets/imgs/feli.png"),
+        require("@/assets/imgs/rulue.png"),
+      ],
     };
   },
 };
@@ -35,11 +41,15 @@ export default {
 <style scoped>
 #right-panel {
   margin-top: 1em;
+  height: calc(100vh - 1em);
+  overflow-y: scroll;
 }
+
 img {
-  height: 30vh;
+  height: 24vh;
   width: auto;
 }
+
 .right-panel {
   background: rgba(0, 212, 255, 1);
   font-family: "HomepageBaukasten-bold";
