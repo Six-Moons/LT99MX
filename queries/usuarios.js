@@ -1,5 +1,7 @@
 const {pool} = require('./pool_config');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+const saltRounds = 2;
 
 const tablaUsuarios = 'usuarios'
 const infoUsuario = 'userName, nombre, estado, foto, descripcion, insigniaFavorita';
@@ -32,22 +34,24 @@ const crearUsuario = (request, response) => {
     let soiAdmin = false;
     let userID = uuidv4();
     let fotoPath = 'path/to/file';
-    let contraseniaEncriptada = contrasenia;
+    bcrypt.hash(contrasenia, saltRounds, function(err, hash) {
+        let contraseniaEncriptada = hash;
+        pool.query(`INSERT INTO ${tablaUsuarios} (${camposTablaUsuarios}) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, [userID, soiAdmin, username, correo, contraseniaEncriptada, nombre, estado, fotoPath, descripcion], 
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                response.statusMessage = "Error in query";
+                let statusCode = 408;
+                return response.status( statusCode ).json({
+                    status : statusCode,
+                    message : response.statusMessage,
+                    error: error.detail
+                })
+            }
+            response.status(201).send(`User added with username: ${username}`)
+        });
+    });;
 
-    pool.query(`INSERT INTO ${tablaUsuarios} (${camposTablaUsuarios}) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, [userID, soiAdmin, username, correo, contraseniaEncriptada, nombre, estado, fotoPath, descripcion], 
-    (error, results) => {
-        if (error) {
-            console.log(error);
-            response.statusMessage = "Error in query";
-            let statusCode = 408;
-            return response.status( statusCode ).json({
-                status : statusCode,
-                message : response.statusMessage,
-                error: error.detail
-            })
-        }
-        response.status(201).send(`User added with username: ${username}`)
-    });
 }
 
 const actualizarUsuario = (request, response) => {

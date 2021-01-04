@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "bootstrap": "^5.0.0-beta1",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
