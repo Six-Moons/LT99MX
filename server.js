@@ -2,6 +2,7 @@
 require('dotenv').config()
 const {PORT} = process.env
 const {respuesta, mensajeDeError, verifyToken} = require('./global');
+const {upload} = require('./localMutler');
 
 // Configuración del servidor con Exprees
 const express = require('express')
@@ -10,32 +11,16 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('uploads'));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
 
-// Configración multer
-const multer = require('multer')
-const path = require('path');
-
-const storage = multer.diskStorage({
-    destination: './uploads/',
-    filename: function(req, file, cb){
-        cb(null,file.originalname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-
-var upload = multer({
-    storage,
-    limits: {
-        fileSize: 1000000,
-    }
-}).single('perfil');
-
 // Ejemplo para subir foto al servidor
 app.post('/profile', function (req, res, next) {
+    console.log(req.file)
     upload(req, res, (err) => {
         if(err){
             let msg = err
