@@ -11,22 +11,31 @@ const infoUsuario = 'userName, nombre, estado, foto, descripcion, insigniaFavori
 const {respuesta, mensajeDeError} = require('./../global');
 
 const conseguirUsuarios = (request, response) => {
-    pool.query(`SELECT ${infoUsuario} FROM ${tablaUsuarios} ORDER BY userID ASC`, (error, results) => {
+    const query = `
+        SELECT ${infoUsuario} 
+        FROM ${tablaUsuarios} 
+        ORDER BY userID ASC
+    `;
+    pool.query(query, (error, results) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
-        response.status(200).json(results.rows)
+        return response.status(200).json(results.rows)
     })
 }
 
 const conseguirUsuarioPorUsername = (request, response) => {
     const username = request.params.username
-    console.log(username);
-    pool.query(`SELECT ${infoUsuario} FROM ${tablaUsuarios} WHERE username = $1`, [username], (error, results) => {
+    const query = `
+        SELECT ${infoUsuario} 
+        FROM ${tablaUsuarios} 
+        WHERE username = $1
+    `;
+    pool.query(query, [username], (error, results) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
-        response.status(200).json(results.rows[0])
+        return response.status(200).json(results.rows[0])
     })
 }
 
@@ -41,48 +50,39 @@ const login = (request, response) => {
     let loginUsuario = ((username) ? 'username' : 'correo')
     let varLogin = ((username) ? username : correo);
 
-    pool.query(`SELECT * FROM ${tablaUsuarios} WHERE ${loginUsuario} = $1`, [varLogin], 
-    (error, results) => {
+    const query = `
+        SELECT * 
+        FROM ${tablaUsuarios} 
+        WHERE ${loginUsuario} = $1
+    `;
+    pool.query(query, [varLogin], (error, results) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         } else if (results.rows.length) {
             bcrypt.compare(contrasenia, results.rows[0].contrasenia, function(err, result) {
-                if (result) {
-                    const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0]
-                    let user = {username, soiadmin, nombre, estado, insigniafavorita};
-                    jwt.sign({user}, SECRET_KEY, (error, token) => {
-                        if (error) {
-                            let msg = 'Error con JWT';
-                            return mensajeDeError(response, error, msg, msg, 408);
-                        } else {
-                            response.status(200).json({
-                                message: `Login correcto de: ${varLogin}`,
-                                token
-                            });
-                        }
-                    });
-                } else {
-                    response.statusMessage = 'Usuario/correo y contraseña incorrectos';
-                    let statusCode = 402;
-                    return response.status( statusCode ).json({
-                        status : statusCode,
-                        message : response.statusMessage
-                    })
+                if (err) {
+                    let msg = 'Usuario/correo y contraseña incorrectos';
+                    return mensajeDeError(response, err, msg, msg, 402);
                 }
+                const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0]
+                let user = {username, soiadmin, nombre, estado, insigniafavorita};
+                jwt.sign({user}, SECRET_KEY, (error, token) => {
+                    if (error) {
+                        let msg = 'Error con JWT';
+                        return mensajeDeError(response, error, msg, msg, 408);
+                    } else {
+                        let msg = `Login correcto de: ${varLogin}`;
+                        return respuesta(response, msg, 200, {msg, token});
+                    }
+                });
 
             });
         } else {
-            response.statusMessage = 'No se encontró usuario/correo';
-            let statusCode = 404;
-            return response.status( statusCode ).json({
-                status : statusCode,
-                message : response.statusMessage
-            })
+            let msg = 'No se encontró usuario/correo';
+            return mensajeDeError(response, error, msg, msg, 404);
         }
     });
 }
-
-const camposTablaUsuarios = 'userID, soiAdmin, username, correo, contrasenia, nombre, estado, foto, descripcion'
 
 const crearUsuario = (request, response) => {
     const {username, correo, contrasenia, nombre, estado, archivoFoto, descripcion} = request.body
@@ -91,12 +91,17 @@ const crearUsuario = (request, response) => {
     let fotoPath = 'path/to/file';
     bcrypt.hash(contrasenia, SALT_ROUNDS, function(err, hash) {
         let contraseniaEncriptada = hash;
-        pool.query(`INSERT INTO ${tablaUsuarios} (${camposTablaUsuarios}) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, [userID, soiAdmin, username, correo, contraseniaEncriptada, nombre, estado, fotoPath, descripcion], 
-        (error, results) => {
+        const query = `
+            INSERT INTO ${tablaUsuarios} 
+            (userID, soiAdmin, username, correo, contrasenia, nombre, estado, foto, descripcion) VALUES 
+            ($1,     $2,       $3,       $4,     $5,          $6,     $7,     $8,   $9)
+        `;
+        pool.query(query, [userID, soiAdmin, username, correo, contraseniaEncriptada, nombre, estado, fotoPath, descripcion], (error, results) => {
             if (error) {
                 return mensajeDeError(response, error, error.detail, error.detail, 408);
             }
-            response.status(201).send(`User added with username: ${username}`)
+            let msg = `User added with username: ${username}`;
+            return respuesta(response, msg, 200, {msg});
         });
     });
 
@@ -110,10 +115,12 @@ const actualizarUsuario = (request, response) => {
             const username = parseInt(request.params.username)
             const {nombre, estado, foto, descripcion} = request.body
         
-            pool.query(
-                `UPDATE ${tablaUsuarios} SET nombre = $1, estado = $2, foto = $3, descripcion = $4 WHERE username = $5`,
-                [nombre, estado, foto, descripcion, username],
-                (error, results) => {
+            const query = `
+                UPDATE ${tablaUsuarios} 
+                SET nombre = $1, estado = $2, foto = $3, descripcion = $4 
+                WHERE username = $5
+            `;
+            pool.query(query, [nombre, estado, foto, descripcion, username], (error, results) => {
                     if (error) {
                         throw error
                     } else {
@@ -138,7 +145,11 @@ const actualizarUsuario = (request, response) => {
 const borrarUsuario = (request, response) => {
     const username = parseInt(request.params.username)
 
-    pool.query(`DELETE FROM ${tablaUsuarios} WHERE username = $1`, [username], (error, results) => {
+    const query = `
+        DELETE FROM ${tablaUsuarios} 
+        WHERE username = $1
+    `;
+    pool.query(query, [username], (error, results) => {
         if (error) {
             throw error
         }
