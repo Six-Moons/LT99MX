@@ -10,7 +10,13 @@
             <hr />
           </div>
           <div class="col-5 foo hide-sm">
-            <button id="edit-profile" class="btn btn-primary">Editar</button>
+            <button
+              id="edit-profile"
+              class="btn btn-primary"
+              v-b-modal.profile-editor
+            >
+              Editar
+            </button>
           </div>
         </div>
         <div class="row">
@@ -46,6 +52,93 @@
         <div class="foo hide-lg">
           <button id="edit-profile" class="btn btn-primary">Editar</button>
         </div>
+        <b-modal id="profile-editor" title="Editar perfil">
+          <div>
+            <b-avatar
+              button
+              @click="changePhoto"
+              :src="photo_url"
+              size="6rem"
+            ></b-avatar>
+          </div>
+          <b-form-file
+            id="photo-input"
+            v-model="photoFile"
+            class="hidden"
+            accept="image/*"
+            plain
+          ></b-form-file>
+          <b-form @submit="registrationSubmit">
+            <b-form-group
+              id="registration-email-group"
+              label="Correo:"
+              label-for="registration-email"
+            >
+              <b-form-input
+                id="registration-email"
+                v-model="registrationData.email"
+                type="email"
+                placeholder="correo@ejemplo.com"
+                :value="email"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              id="registration-username-group"
+              label="Nombre de usuario:"
+              label-for="registration-username"
+            >
+              <b-form-input
+                id="registration-username"
+                placeholder="Nombre de usuario"
+                v-model="registrationData.username"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              id="registration-state-group"
+              label="Estado:"
+              label-for="registration-state"
+            >
+              <b-form-select
+                id="registration-state"
+                v-model="registrationData.state"
+                :options="stateOptions"
+                required
+              ></b-form-select>
+            </b-form-group>
+
+            <b-form-group
+              id="registration-password-group"
+              label="Contraseña:"
+              label-for="registration-password"
+            >
+              <b-form-input
+                id="registration-password"
+                placeholder="Contraseña"
+                v-model="registrationData.password"
+                type="password"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              id="registration-password-confirmation-group"
+              label="Confirmar contraseña:"
+              label-for="registration-password-confirmation"
+            >
+              <b-form-input
+                id="registration-password-confirmation"
+                placeholder="Confirmar contraseña"
+                v-model="registrationData.passwordConfirmation"
+                type="password"
+                required
+              ></b-form-input>
+            </b-form-group>
+          </b-form>
+        </b-modal>
       </div>
       <right-panel class="col-4 hide-sm"></right-panel>
     </div>
@@ -73,7 +166,61 @@ export default {
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
       ],
+      registrationData: {
+        email: "cuchicuchi42@gmail.com",
+        username: "",
+        state: null,
+        password: "",
+        passwordConfirmation: "",
+      },
+      stateOptions: [
+        { text: "-- Selecciona uno -- ", value: null, disabled: true },
+        "Aguascalientes",
+        "Baja California",
+        "Baja California Sur",
+        "Campeche",
+        "Chiapas",
+        "Ciudad de México",
+        "Chihuahua",
+        "Coahuila",
+        "Colima",
+        "Durango",
+        "Estado de México",
+        "Guanajuato",
+        "Guerrero",
+        "Hidalgo",
+        "Jalisco",
+        "Michoacán",
+        "Morelos",
+        "Nayarit",
+        "Nuevo León",
+        "Oaxaca",
+        "Puebla",
+        "Querétaro",
+        "Quintana Roo",
+        "San Luis Potosí",
+        "Sinaloa",
+        "Sonora",
+        "Tabasco",
+        "Tamaulipas",
+        "Tlaxcala",
+        "Veracruz",
+        "Yucatán",
+        "Zacatecas",
+        "Otro",
+      ],
+      photoFile: null,
     };
+  },
+  mounted() {
+    this.registrationData.username = this.username;
+    this.registrationData.state = this.state;
+  },
+  methods: {
+    changePhoto() {
+      console.log("AAAAAAAAAAAA");
+      document.querySelector("#photo-input").click();
+    },
   },
 };
 </script>
@@ -99,7 +246,7 @@ export default {
   font-size: 3vh;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 576px) {
   .profile {
     margin-top: 3em;
   }
