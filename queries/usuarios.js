@@ -153,14 +153,14 @@ const actualizarUsuario = (request, response) => {
                     if (request.file){
                         fotoPathQuery = `, foto = $5`;
                         arrArgumentos.push(request.file.path);
-                        fs.unlink(foto, (err) => {
-                            if (err) {
-                                console.error(err)
-                                return
-                            }
-                        
-                            //file removed
-                        })
+                        if (foto) {
+                            fs.unlink(foto, (err) => {
+                                if (err) {
+                                    console.error(err)
+                                    return
+                                }
+                            })
+                        }
                     }
                     const query = `
                         UPDATE ${tablaUsuarios} 
