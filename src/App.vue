@@ -1,28 +1,68 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-navbar
+      toggleable="lg"
+      type="light"
+      variant="light"
+      class="show-xs"
+      fixed="top"
+    >
+      <b-navbar-brand to="/">LT99MX</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item to="/" exact-active-class="active">Tetris</b-nav-item>
+          <b-nav-item to="/rankings" exact-active-class="active">
+            Rankings
+          </b-nav-item>
+          <b-nav-item to="/noticias" exact-active-class="active">
+            Noticias
+          </b-nav-item>
+          <b-nav-item to="/faq" exact-active-class="active">
+            FAQ/Comentarios
+          </b-nav-item>
+          <b-nav-item to="/donaciones" exact-active-class="active">
+            Donaciones
+          </b-nav-item>
+          <b-nav-item to="/mi-cuenta" exact-active-class="active">
+            Mi cuenta
+          </b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <div class="row">
+      <left-panel
+        class="col-1 col-xl-3 bg-dark hide-xs"
+        :session="loggedIn"
+      ></left-panel>
+      <router-view class="col-sm-11 col-xl-9" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LeftPanel from "./components/LeftPanel.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { LeftPanel },
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  overflow-x: hidden;
+}
+
+table.table-hover tbody tr:hover {
+  background-color: var(--red);
+  color: var(--light);
 }
 </style>
