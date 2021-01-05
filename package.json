@@ -7,9 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
+  "dependencies": {\
     "bcrypt": "^5.0.0",
-    "bootstrap": "^5.0.0-beta1",
+    "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
     "jsonwebtoken": "^8.5.1",
@@ -28,6 +28,8 @@
     "dotenv": "^8.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.30.0",
+    "sass-loader": "^10.1.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
