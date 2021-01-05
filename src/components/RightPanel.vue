@@ -32,6 +32,7 @@ export default {
         require("@/assets/imgs/arle.png"),
         require("@/assets/imgs/feli.png"),
         require("@/assets/imgs/rulue.png"),
+        require("@/assets/imgs/sanrio.jpg"),
       ],
     };
   },
