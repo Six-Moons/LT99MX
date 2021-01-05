@@ -1,4 +1,4 @@
-exports.PORT = process.env.PORT || 8080;
+exports.PORT = process.env.PORT || 3000;
 
 exports.SECRET_KEY = process.env.SECRET_KEY || 'secretkey'
 exports.SALT_ROUNDS = process.env.SALT_ROUNDS || 2

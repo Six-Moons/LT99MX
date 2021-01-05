@@ -2,7 +2,25 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const usuarios = require('./queries/usuarios')
+const path = require('path');
 let {PORT} = require('./config');
+const {respuesta, mensajeDeError} = require('./global');
+
+var multer  = require('multer')
+
+const storage = multer.diskStorage({
+    destination: './uploads/',
+    filename: function(req, file, cb){
+        cb(null,file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+var upload = multer({
+    storage,
+    limits: {
+        fileSize: 1000000,
+    }
+}).single('perfil');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,6 +53,23 @@ function verifyToken(req, res, next) {
         res.sendStatus(403);
     }
 }
+
+app.post('/profile', function (req, res, next) {
+    upload(req, res, (err) => {
+        if(err){
+            let msg = err
+            return mensajeDeError(res, error, msg, msg, 400);
+        } else {
+            if(req.file == undefined){
+                let msg = 'Error: No File Selected!'
+                return mensajeDeError(res, error, msg, msg, 400);
+            } else {
+                let msg = 'Archivo subido';
+                return respuesta(res, msg, 200, {msg, file: `uploads/${req.file.filename}`});
+            }
+        }
+    });
+});
 
 // Endpoints de usuarios
 app.get   ('/usuarios/conseguirUsuarios',           usuarios.conseguirUsuarios)

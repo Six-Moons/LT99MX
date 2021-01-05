@@ -7,18 +7,9 @@ let {SECRET_KEY, SALT_ROUNDS} = require('./../config');
 const tablaUsuarios = 'usuarios'
 const infoUsuario = 'userName, nombre, estado, foto, descripcion, insigniaFavorita';
 
-function respuesta(res, mensaje, codigo, data) {
-	res.statusMessage = mensaje;
-	return res.status(codigo).json(data);
-}
-
-function mensajeDeError(res, err, errMsg, msg, codigo) {
-	console.log(errMsg, err);
-	return valueToReturn(res, msg, codigo, {status: codigo, message: msg});
-}
+const {respuesta, mensajeDeError} = require('./../global');
 
 const conseguirUsuarios = (request, response) => {
-  
     pool.query(`SELECT ${infoUsuario} FROM ${tablaUsuarios} ORDER BY userID ASC`, (error, results) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
