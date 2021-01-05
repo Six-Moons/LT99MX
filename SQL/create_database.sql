@@ -15,7 +15,7 @@ CREATE TABLE Usuarios (
     soiAdmin boolean NOT NULL,
     username varchar(20) NOT NULL UNIQUE,
     correo varchar(50) NOT NULL UNIQUE,
-    contrasenia varchar(50) NOT NULL,
+    contrasenia varchar(65) NOT NULL,
     nombre varchar(50) NOT NULL,
     estado varchar(20) NOT NULL,
     foto varchar(100),
