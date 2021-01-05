@@ -201,19 +201,42 @@ const actualizarUsuario = (request, response) => {
     
 }
 
-const borrarUsuario = (request, response) => {
-    const username = parseInt(request.params.username)
+const borrarUsuario = (request,     response) => {
+    jwt.verify(request.token, SECRET_KEY, (err, authData) => {
+        if(err) {
+            return response.sendStatus(403);
+        } else {
+            let adminUsername = authData.user.username
+            const query = `
+                SELECT userName, soiadmin 
+                FROM ${tablaUsuarios} 
+                WHERE username = $1
+            `;
+            pool.query(query, [adminUsername], (error, results) => {
+                if (error) {
+                    return mensajeDeError(response, error, error.detail, error.detail, 408);
+                }
+                if (results.rows[0].soiadmin) {
+                    const username = request.params.username
+                    const query = `
+                        DELETE FROM ${tablaUsuarios} 
+                        WHERE username = $1
+                    `;
+                    pool.query(query, [username], (error, results) => {
+                        if (error) {
+                            throw error
+                        }
+                        let msg = ((results.rowCount > 0) ? `Se borró el usuario ${username} correctamente` : 'No se encontró el usuario');
+                        return respuesta(response, msg, 200, {msg});
+                    })
+                } else {
+                    return response.sendStatus(403);
+                }
+            })
 
-    const query = `
-        DELETE FROM ${tablaUsuarios} 
-        WHERE username = $1
-    `;
-    pool.query(query, [username], (error, results) => {
-        if (error) {
-            throw error
+        
         }
-        response.status(200).send(`User deleted with username: ${username}`)
-    })
+    });
 }
 module.exports = {
     conseguirUsuarios,

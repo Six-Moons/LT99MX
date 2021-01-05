@@ -50,7 +50,7 @@ app.get   ('/usuarios/conseguirUsuario/:username',  usuarios.conseguirUsuarioPor
 app.post  ('/usuarios/login',                       usuarios.login)
 app.post  ('/usuarios/crearUsuario',                usuarios.crearUsuario)
 app.put   ('/usuarios/actualizarUsuario/:username', verifyToken, usuarios.actualizarUsuario)
-app.delete('/usuarios/borrarUsuario/:username',     usuarios.borrarUsuario)
+app.delete('/usuarios/borrarUsuario/:username',     verifyToken, usuarios.borrarUsuario)
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`)
