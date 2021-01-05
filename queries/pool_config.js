@@ -1,4 +1,5 @@
-let {DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER} = require('./../config');
+require('dotenv').config()
+const {DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER} = process.env;
 
 const Pool = require('pg').Pool
 const pool = new Pool({

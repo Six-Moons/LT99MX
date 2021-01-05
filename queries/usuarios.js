@@ -1,8 +1,9 @@
+require('dotenv').config()
 const {pool} = require('./pool_config');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-let {SECRET_KEY, SALT_ROUNDS} = require('./../config');
+const {SECRET_KEY, SALT_ROUNDS} = process.env;
 
 const tablaUsuarios = 'usuarios'
 const infoUsuario = 'userName, nombre, estado, foto, descripcion, insigniaFavorita';

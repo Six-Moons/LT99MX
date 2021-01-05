@@ -1,9 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const usuarios = require('./queries/usuarios')
 const path = require('path');
-let {PORT} = require('./config');
+const {PORT} = process.env
 const {respuesta, mensajeDeError} = require('./global');
 
 var multer  = require('multer')
@@ -54,6 +55,7 @@ function verifyToken(req, res, next) {
     }
 }
 
+// Ejemplo para subir foto al servidor
 app.post('/profile', function (req, res, next) {
     upload(req, res, (err) => {
         if(err){
