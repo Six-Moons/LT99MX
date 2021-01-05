@@ -52,7 +52,14 @@
         <div class="foo hide-lg">
           <button id="edit-profile" class="btn btn-primary">Editar</button>
         </div>
-        <b-modal id="profile-editor" title="Editar perfil">
+        <b-modal
+          id="profile-editor"
+          title="Editar perfil"
+          cancel-title="Cancelar"
+          ok-title="Guardar"
+          ok-variant="success"
+          @ok="saveEdits"
+        >
           <div>
             <b-avatar
               button
@@ -63,20 +70,20 @@
           </div>
           <b-form-file
             id="photo-input"
-            v-model="photoFile"
+            v-model="photo_file"
             class="hidden"
             accept="image/*"
             plain
           ></b-form-file>
-          <b-form @submit="registrationSubmit">
+          <div>
             <b-form-group
-              id="registration-email-group"
+              id="profile-email-group"
               label="Correo:"
-              label-for="registration-email"
+              label-for="profile-email"
             >
               <b-form-input
-                id="registration-email"
-                v-model="registrationData.email"
+                id="profile-email"
+                v-model="profile_data.email"
                 type="email"
                 placeholder="correo@ejemplo.com"
                 :value="email"
@@ -85,59 +92,72 @@
             </b-form-group>
 
             <b-form-group
-              id="registration-username-group"
+              id="profile-username-group"
               label="Nombre de usuario:"
-              label-for="registration-username"
+              label-for="profile-username"
             >
               <b-form-input
-                id="registration-username"
+                id="profile-username"
                 placeholder="Nombre de usuario"
-                v-model="registrationData.username"
+                v-model="profile_data.username"
                 required
               ></b-form-input>
             </b-form-group>
 
             <b-form-group
-              id="registration-state-group"
+              id="profile-state-group"
               label="Estado:"
-              label-for="registration-state"
+              label-for="profile-state"
             >
               <b-form-select
-                id="registration-state"
-                v-model="registrationData.state"
+                id="profile-state"
+                v-model="profile_data.state"
                 :options="stateOptions"
                 required
               ></b-form-select>
             </b-form-group>
 
             <b-form-group
-              id="registration-password-group"
+              id="profile-password-group"
               label="Contraseña:"
-              label-for="registration-password"
+              label-for="profile-password"
             >
               <b-form-input
-                id="registration-password"
+                id="profile-password"
                 placeholder="Contraseña"
-                v-model="registrationData.password"
+                v-model="profile_data.password"
                 type="password"
                 required
               ></b-form-input>
             </b-form-group>
 
             <b-form-group
-              id="registration-password-confirmation-group"
+              id="profile-password-confirmation-group"
               label="Confirmar contraseña:"
-              label-for="registration-password-confirmation"
+              label-for="profile-password-confirmation"
             >
               <b-form-input
-                id="registration-password-confirmation"
+                id="profile-password-confirmation"
                 placeholder="Confirmar contraseña"
-                v-model="registrationData.passwordConfirmation"
+                v-model="profile_data.passwordConfirmation"
                 type="password"
                 required
               ></b-form-input>
             </b-form-group>
-          </b-form>
+
+            <b-form-group
+              id="profile-password-confirmation-group"
+              label="Descripción:"
+              label-for="profile-description"
+            >
+              <b-textarea
+                id="profile-description"
+                v-model="profile_data.description"
+                placeholder="Descripción"
+                max-rows="8"
+              ></b-textarea>
+            </b-form-group>
+          </div>
         </b-modal>
       </div>
       <right-panel class="col-4 hide-sm"></right-panel>
@@ -166,12 +186,13 @@ export default {
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
       ],
-      registrationData: {
+      profile_data: {
         email: "cuchicuchi42@gmail.com",
         username: "",
         state: null,
         password: "",
         passwordConfirmation: "",
+        description: "",
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
@@ -209,17 +230,25 @@ export default {
         "Zacatecas",
         "Otro",
       ],
-      photoFile: null,
+      photo_file: null,
     };
   },
   mounted() {
-    this.registrationData.username = this.username;
-    this.registrationData.state = this.state;
+    this.profile_data.username = this.username;
+    this.profile_data.state = this.state;
+    this.profile_data.description = this.description;
   },
   methods: {
     changePhoto() {
-      console.log("AAAAAAAAAAAA");
       document.querySelector("#photo-input").click();
+    },
+    saveEdits() {
+      console.log("Changes saved");
+
+      // Change to corresponding POST requests ONCE BACK END IS READY
+      this.username = this.profile_data.username;
+      this.state = this.profile_data.state;
+      this.description = this.profile_data.description;
     },
   },
 };
