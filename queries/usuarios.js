@@ -9,8 +9,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs')
 
-const tablaUsuarios = 'usuarios'
+const tablaUsuarios = 'usuarios' // Nombre de la tabla de usuarios dentro de la base de datos
 
+/*
+    Función para conseguir información de todos los usuarios
+*/
 const conseguirUsuarios = (request, response) => {
     const query = `
         SELECT userName, nombre, estado, foto, descripcion, insigniaFavorita 
@@ -25,8 +28,11 @@ const conseguirUsuarios = (request, response) => {
     })
 }
 
+/*
+    Función para conseguir información de un usuario dado su username
+*/
 const conseguirUsuarioPorUsername = (request, response) => {
-    const username = request.params.username
+    const username = request.params.username;
     const query = `
         SELECT userName, nombre, estado, foto, descripcion, insigniaFavorita 
         FROM ${tablaUsuarios} 
@@ -40,14 +46,20 @@ const conseguirUsuarioPorUsername = (request, response) => {
     })
 }
 
+/*
+    Funnción para hacer login.
+    Regresa un webtoken
+*/
 const login = (request, response) => {
     const {username, correo, contrasenia} = request.body
 
+    // Comprobación de que no falte ni un campo dentro del cuerpo del request
     if ((!username || !correo) && !contrasenia) {
         let msg = 'Falta campo en el cuerpo';
         return mensajeDeError(response, '', msg, msg, 400);
     }
 
+    // Checa si se iniciara sesión con el username o correo
     let loginUsuario = ((username) ? 'username' : 'correo')
     let varLogin = ((username) ? username : correo);
 
@@ -60,13 +72,19 @@ const login = (request, response) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         } else if (results.rows.length) {
+            // Compara la contraseña dada con la contraseña encriptada dentro de la base de datos
+
             bcrypt.compare(contrasenia, results.rows[0].contrasenia, function(err, result) {
                 if (err) {
                     let msg = 'Usuario/correo y contraseña incorrectos';
                     return mensajeDeError(response, err, msg, msg, 402);
                 }
+
+                // Creación el payload para el webtoken
                 const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0]
                 let user = {username, soiadmin, nombre, estado, insigniafavorita};
+
+                // Genera del webtoken y se lo manda al usuario
                 jwt.sign({user}, SECRET_KEY, (error, token) => {
                     if (error) {
                         let msg = 'Error con JWT';
@@ -85,29 +103,32 @@ const login = (request, response) => {
     });
 }
 
+/*
+    Funnción para crear un usuario.
+    Regresa un webtoken
+*/
 const crearUsuario = (request, response) => {
+    // Función para permitir la carga de archivos
     upload(request, response, (err) => {
         if(err){
             console.log(err);
         } else {
             const {username, correo, contrasenia, nombre, estado, descripcion} = request.body
 
+            // Comprobación de que no falte ni un campo dentro del cuerpo del request
             if (!username || !correo || !contrasenia) {
                 let msg = 'Falta campo en el cuerpo';
                 return mensajeDeError(response, '', msg, msg, 400);
             }
 
-            let fotoPath = '';
-            console.log(request.file);
-            if(request.file == undefined){
-                fotoPath = ''
-            } else {
-                fotoPath = request.file.path;
-            }
+            // Checa si se subió alguna foto para guardar el path dentro de la base de datos;
+            let fotoPath = ((request.file == undefined) ? '' : request.file.path) ;
 
+            // Genera el ID del usuario y se le asigna que no es administrador
             let soiAdmin = false;
             let userID = uuidv4();
             
+            // Encripta la contraseña dada
             bcrypt.hash(contrasenia, parseInt(SALT_ROUNDS), function(err, hash) {
                 if (err) {
                     return mensajeDeError(response, err, err, err, 408);
@@ -122,16 +143,35 @@ const crearUsuario = (request, response) => {
                     if (error) {
                         return mensajeDeError(response, error, error.detail, error.detail, 408);
                     }
-                    let msg = `User added with username: ${username}`;
-                    return respuesta(response, msg, 200, {msg});
+
+                    // Creación del payload para el webtoken
+                    let user = {username, soiadmin: false, nombre, estado, insigniafavorita: null};
+
+                    // Genera el webtoken y se lo manda al usuario
+                    jwt.sign({user}, SECRET_KEY, (error, token) => {
+                        if (error) {
+                            let msg = 'Error con JWT';
+                            return mensajeDeError(response, error, msg, msg, 408);
+                        } else {
+                            let msg = `Usuario creado correctamente`;
+                            return respuesta(response, msg, 200, {msg, token});
+                        }
+                    });
                 });
             });
         }
     });
 }
 
+/*
+    Funnción para actualizar la información de un usuario.
+    Regresa un webtoken
+*/
 const actualizarUsuario = (request, response) => {
+    // Función para permitir la carga de archivos
     upload(request, response, (err) => {
+
+        // Verifica que el webtoken dado por el usuario sea correcta
         jwt.verify(request.token, SECRET_KEY, (err, authData) => {
             if(err) {
                 response.sendStatus(403);
@@ -139,6 +179,7 @@ const actualizarUsuario = (request, response) => {
                 const username = request.params.username
                 const {nombre, estado, descripcion} = request.body
 
+                // Busca el path de la foto actual del usuario
                 const queryPath = `
                     SELECT foto
                     FROM ${tablaUsuarios} 
@@ -148,8 +189,14 @@ const actualizarUsuario = (request, response) => {
                     if (error) {
                         return mensajeDeError(response, error, error.detail, error.detail, 408);
                     }
-                    const {foto} = results.rows[0];
-                    let arrArgumentos = [nombre, estado, descripcion, username]
+                    const {foto} = results.rows[0]; // Path de la foto actual del usuario
+                    let arrArgumentos = [nombre, estado, descripcion, username] // Datos del usuario que se actualizaran
+
+                    /*
+                        Checa si se subió algún archivo
+                        Si sí, agrega el path del archivo a los datos del usuario que se actualizaran
+                        y checa si el usuario ya tenía una foto. Si sí, borra la foto vieja.
+                    */
                     if (request.file){
                         fotoPathQuery = `, foto = $5`;
                         arrArgumentos.push(request.file.path);
@@ -162,6 +209,8 @@ const actualizarUsuario = (request, response) => {
                             })
                         }
                     }
+
+                    // Actualiza la información
                     const query = `
                         UPDATE ${tablaUsuarios} 
                         SET nombre = $1, estado = $2, descripcion = $3${fotoPathQuery}
@@ -171,26 +220,19 @@ const actualizarUsuario = (request, response) => {
                         if (error) {
                             return mensajeDeError(response, error, error, error, 408);
                         } else {
-                            const query = `
-                                SELECT username, soiadmin, nombre, estado, insigniafavorita
-                                FROM ${tablaUsuarios} 
-                                WHERE username = $1
-                            `;
-                            pool.query(query, [username], (error, results) => {
+
+                            // Creación del payload para el webtoken
+                            let user = {username, soiadmin: authData.soiadmin, nombre, estado, insigniafavorita};
+
+                            // Genera el webtoken y se lo manda al usuario
+                            jwt.sign({user}, SECRET_KEY, (error, token) => {
                                 if (error) {
-                                    return mensajeDeError(response, error, error.detail, error.detail, 408);
+                                    let msg = 'Error con JWT'
+                                    return mensajeDeError(response, error, msg, msg, 408);
+                                } else {
+                                    let msg = `Se actualizó la información correctamente de ${username}`
+                                    return respuesta(response, msg, 200, {msg, token});
                                 }
-                                const {username, soiadmin, nombre, estado, insigniafavorita} = results.rows[0];
-                                let user = {username, soiadmin, nombre, estado, insigniafavorita};
-                                jwt.sign({user}, SECRET_KEY, (error, token) => {
-                                    if (error) {
-                                        let msg = 'Error con JWT'
-                                        return mensajeDeError(response, error, msg, msg, 408);
-                                    } else {
-                                        let msg = `Se actualizó la información correctamente de ${username}`
-                                        return respuesta(response, msg, 200, {msg, token});
-                                    }
-                                });
                             });
                         }
                     });
@@ -201,11 +243,18 @@ const actualizarUsuario = (request, response) => {
     
 }
 
+/*
+    Funnción para borrar un usuario.
+*/
 const borrarUsuario = (request,     response) => {
+
+    // Verifica que el webtoken dado por el usuario sea correcta
     jwt.verify(request.token, SECRET_KEY, (err, authData) => {
         if(err) {
             return response.sendStatus(403);
         } else {
+
+            // Checa si el usuario haciendo el request es administrador
             let adminUsername = authData.user.username
             const query = `
                 SELECT userName, soiadmin 
@@ -216,8 +265,12 @@ const borrarUsuario = (request,     response) => {
                 if (error) {
                     return mensajeDeError(response, error, error.detail, error.detail, 408);
                 }
+
+                // Comprueba si el usuario que hizo el request es admin
                 if (results.rows[0].soiadmin) {
                     const username = request.params.username
+
+                    // Busca el path de la foto del usuario a borrar
                     const queryPath = `
                         SELECT foto
                         FROM ${tablaUsuarios} 
@@ -227,6 +280,8 @@ const borrarUsuario = (request,     response) => {
                         if (error) {
                             return mensajeDeError(response, error, error.detail, error.detail, 408);
                         }
+
+                        // Borra la foto del usuario que se quiere borrar
                         const {foto} = results.rows[0];
                         if (foto) {
                             fs.unlink(foto, (err) => {
@@ -236,6 +291,8 @@ const borrarUsuario = (request,     response) => {
                                 }
                             })
                         }
+
+                        // Borra el usuario
                         const query = `
                             DELETE FROM ${tablaUsuarios} 
                             WHERE username = $1
@@ -257,6 +314,7 @@ const borrarUsuario = (request,     response) => {
         }
     });
 }
+
 module.exports = {
     conseguirUsuarios,
     conseguirUsuarioPorUsername,
