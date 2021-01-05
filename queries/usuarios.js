@@ -7,6 +7,7 @@ const {upload} = require('./../localMutler');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fs = require('fs')
 
 const tablaUsuarios = 'usuarios'
 
@@ -138,20 +139,35 @@ const actualizarUsuario = (request, response) => {
                 const username = request.params.username
                 const {nombre, estado, descripcion} = request.body
 
-                let fotoPath = '';
-                let fotoPathQuery = '';
-                let arrArgumentos = [nombre, estado, descripcion, username]
-                if (request.file){
-                    fotoPathQuery = `, foto = $5`;
-                    fotoPath = request.file.path
-                    arrArgumentos.push(fotoPath);
-                }
-                const query = `
-                    UPDATE ${tablaUsuarios} 
-                    SET nombre = $1, estado = $2, descripcion = $3${fotoPathQuery}
-                    WHERE username = $4
+                const queryPath = `
+                    SELECT foto
+                    FROM ${tablaUsuarios} 
+                    WHERE username = $1
                 `;
-                pool.query(query, arrArgumentos, (error, results) => {
+                pool.query(queryPath, [username], (error, results) => {
+                    if (error) {
+                        return mensajeDeError(response, error, error.detail, error.detail, 408);
+                    }
+                    const {foto} = results.rows[0];
+                    let arrArgumentos = [nombre, estado, descripcion, username]
+                    if (request.file){
+                        fotoPathQuery = `, foto = $5`;
+                        arrArgumentos.push(request.file.path);
+                        fs.unlink(foto, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        
+                            //file removed
+                        })
+                    }
+                    const query = `
+                        UPDATE ${tablaUsuarios} 
+                        SET nombre = $1, estado = $2, descripcion = $3${fotoPathQuery}
+                        WHERE username = $4
+                    `;
+                    pool.query(query, arrArgumentos, (error, results) => {
                         if (error) {
                             return mensajeDeError(response, error, error, error, 408);
                         } else {
@@ -175,18 +191,12 @@ const actualizarUsuario = (request, response) => {
                                         return respuesta(response, msg, 200, {msg, token});
                                     }
                                 });
-                            })
-                            
+                            });
                         }
-                    }
-                )
+                    });
+                });
             }
         });
-        if(err){
-            console.log(err);
-        } else {
-            
-        }
     });
     
 }
