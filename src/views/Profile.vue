@@ -49,8 +49,14 @@
           Descripción
           <p>{{ description }}</p>
         </div>
-        <div class="foo hide-lg">
-          <button id="edit-profile" class="btn btn-primary">Editar</button>
+        <div class="foo show-xs">
+          <button
+            id="edit-profile"
+            class="btn btn-primary"
+            v-b-modal.profile-editor
+          >
+            Editar
+          </button>
         </div>
         <b-modal
           id="profile-editor"
@@ -66,7 +72,12 @@
               @click="changePhoto"
               :src="photo_url"
               size="6rem"
-            ></b-avatar>
+              badge-variant="dark"
+            >
+              <template #badge>
+                <b-icon-pencil-fill></b-icon-pencil-fill>
+              </template>
+            </b-avatar>
           </div>
           <b-form-file
             id="photo-input"
@@ -76,6 +87,19 @@
             plain
           ></b-form-file>
           <div>
+            <b-form-group
+              id="profile-username-group"
+              label="Nombre de usuario:"
+              label-for="profile-username"
+            >
+              <b-form-input
+                id="profile-username"
+                placeholder="Nombre de usuario"
+                v-model="profile_data.username"
+                required
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group
               id="profile-email-group"
               label="Correo:"
@@ -87,19 +111,6 @@
                 type="email"
                 placeholder="correo@ejemplo.com"
                 :value="email"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-              id="profile-username-group"
-              label="Nombre de usuario:"
-              label-for="profile-username"
-            >
-              <b-form-input
-                id="profile-username"
-                placeholder="Nombre de usuario"
-                v-model="profile_data.username"
                 required
               ></b-form-input>
             </b-form-group>
@@ -160,7 +171,7 @@
           </div>
         </b-modal>
       </div>
-      <right-panel class="col-4 hide-sm"></right-panel>
+      <right-panel class="col-4 show-xl"></right-panel>
     </div>
   </div>
 </template>
@@ -175,8 +186,7 @@ export default {
     return {
       username: "AAAAAAAAAAAA",
       favorite_badge: "🥇",
-      photo_url:
-        "https://sadanduseless.b-cdn.net/wp-content/uploads/2019/06/cat-breading11.jpg",
+      photo_url: "http://placekitten.com/460/460",
       name: "Fulano Pérez",
       state: "Tlaxcala",
       description:
