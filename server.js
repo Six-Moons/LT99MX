@@ -1,62 +1,26 @@
+// Variables de ambiente y globales
 require('dotenv').config()
+const {PORT} = process.env
+const {respuesta, mensajeDeError, verifyToken} = require('./global');
+const {upload} = require('./localMutler');
+
+// Configuración del servidor con Exprees
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const usuarios = require('./queries/usuarios')
-const path = require('path');
-const {PORT} = process.env
-const {respuesta, mensajeDeError} = require('./global');
-
-var multer  = require('multer')
-
-const storage = multer.diskStorage({
-    destination: './uploads/',
-    filename: function(req, file, cb){
-        cb(null,file.originalname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-
-var upload = multer({
-    storage,
-    limits: {
-        fileSize: 1000000,
-    }
-}).single('perfil');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('uploads'));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
 
-app.get('/', (request, response) => {
-    response.json({ info: 'Node.js, Express, and Postgres API' })
-})
-
-// Verify Token
-function verifyToken(req, res, next) {
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
-        // Split at the space
-        const bearer = bearerHeader.split(' ');
-        // Get token from array
-        const bearerToken = bearer[1];
-        // Set the token
-        req.token = bearerToken;
-        // Next middleware
-        next();
-    } else {
-        // Forbidden
-        res.sendStatus(403);
-    }
-}
-
 // Ejemplo para subir foto al servidor
 app.post('/profile', function (req, res, next) {
+    console.log(req.file)
     upload(req, res, (err) => {
         if(err){
             let msg = err
@@ -72,6 +36,13 @@ app.post('/profile', function (req, res, next) {
         }
     });
 });
+
+// Funciones para endpoints
+const usuarios = require('./queries/usuarios')
+
+app.get('/', (request, response) => {
+    response.json({ info: 'Node.js, Express, and Postgres API' })
+})
 
 // Endpoints de usuarios
 app.get   ('/usuarios/conseguirUsuarios',           usuarios.conseguirUsuarios)
