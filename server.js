@@ -39,6 +39,7 @@ app.post('/profile', function (req, res, next) {
 
 // Funciones para endpoints
 const usuarios = require('./queries/usuarios')
+const insignias = require('./queries/insignias')
 
 app.get('/', (request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })
@@ -51,6 +52,9 @@ app.post  ('/usuarios/login',                       usuarios.login)
 app.post  ('/usuarios/crearUsuario',                usuarios.crearUsuario)
 app.put   ('/usuarios/actualizarUsuario/:username', verifyToken, usuarios.actualizarUsuario)
 app.delete('/usuarios/borrarUsuario/:username',     verifyToken, usuarios.borrarUsuario)
+
+// Endpoints de insignias
+app.get   ('/insignias/conseguirInsignias',         insignias.conseguirInsignias);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`)
