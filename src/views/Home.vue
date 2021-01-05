@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div class="row">
-      <div id="news-area" class="col col-8">
+      <div id="news-area" class="col-md-7 col-lg-8">
         <!-- Most important news -->
         <b-carousel
           id="carousel-1"
@@ -12,7 +12,7 @@
           background="#ababab"
           img-width="1024"
           img-height="480"
-          style="text-shadow: 1px 1px 2px #333;"
+          style="text-shadow: 1px 1px 2px #333"
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
           label-prev=""
@@ -68,52 +68,52 @@
           <news-card class="news-card" :article="article"></news-card>
         </div>
       </div>
-      <right-panel class="col col-4"></right-panel>
+      <right-panel class="col-5 col-lg-4 hide-sm"></right-panel>
     </div>
   </div>
 </template>
 
 <script>
-import NewsCard from '../components/NewsCard.vue';
-import RightPanel from '../components/RightPanel.vue';
+import NewsCard from "../components/NewsCard.vue";
+import RightPanel from "../components/RightPanel.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     RightPanel,
-    NewsCard
+    NewsCard,
   },
   data() {
     return {
       news: [
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Puyo puyo tetris',
+          title: "Puyo puyo tetris",
           content:
-            'Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris'
+            "Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
         },
         {
-          title: 'Lorem ipsum',
+          title: "Lorem ipsum",
           content:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.'
-        }
-      ]
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
+        },
+      ],
     };
-  }
+  },
 };
 </script>
 
@@ -121,13 +121,27 @@ export default {
 .news-card {
   margin: 1rem;
 }
+
 #news-area {
-  height: 100vh;
-  overflow-y: scroll;
-  scrollbar-width: none;
   padding: 1em;
+  background-color: var(--light);
 }
-#news-area::-webkit-scrollbar {
-  display: none;
+
+@media (min-width: 576px) {
+  #news-area {
+    height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+
+  #news-area::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  #home {
+    margin-top: 3em;
+  }
 }
 </style>
