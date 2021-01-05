@@ -46,15 +46,18 @@ app.get('/', (request, response) => {
 })
 
 // Endpoints de usuarios
-app.get   ('/usuarios/conseguirUsuarios',           usuarios.conseguirUsuarios)
-app.get   ('/usuarios/conseguirUsuario/:username',  usuarios.conseguirUsuarioPorUsername)
-app.post  ('/usuarios/login',                       usuarios.login)
-app.post  ('/usuarios/crearUsuario',                usuarios.crearUsuario)
+app.get   ('/usuarios/conseguirUsuarios',                        usuarios.conseguirUsuarios)
+app.get   ('/usuarios/conseguirUsuario/:username',               usuarios.conseguirUsuarioPorUsername)
+app.post  ('/usuarios/login',                                    usuarios.login)
+app.post  ('/usuarios/crearUsuario',                             usuarios.crearUsuario)
 app.put   ('/usuarios/actualizarUsuario/:username', verifyToken, usuarios.actualizarUsuario)
 app.delete('/usuarios/borrarUsuario/:username',     verifyToken, usuarios.borrarUsuario)
 
 // Endpoints de insignias
-app.get   ('/insignias/conseguirInsignias',         insignias.conseguirInsignias);
+app.get   ('/insignias/conseguirInsignias',                      insignias.conseguirInsignias);
+app.get   ('/insignias/conseguirInsignia/:titulo',               insignias.conseguirInsigniaPorTitulo);
+app.post  ('/insignias/crearInsignia',              verifyToken, insignias.crearInsignia);
+app.put   ('/insignias/actualizarInsignia/:titulo', verifyToken, insignias.actualizarInsignia);
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}.`)

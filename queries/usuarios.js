@@ -1,15 +1,13 @@
 require('dotenv').config()
 const {SECRET_KEY, SALT_ROUNDS} = process.env;
 const {pool} = require('./pool_config');
-const {respuesta, mensajeDeError} = require('./../global');
+const {respuesta, mensajeDeError, tablaUsuarios} = require('./../global');
 const {upload} = require('./../localMutler');
 
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs')
-
-const tablaUsuarios = 'usuarios' // Nombre de la tabla de usuarios dentro de la base de datos
 
 /*
     Función para conseguir información de todos los usuarios

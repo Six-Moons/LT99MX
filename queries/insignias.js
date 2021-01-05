@@ -1,20 +1,20 @@
 require('dotenv').config()
+const {SECRET_KEY} = process.env;
 const {pool} = require('./pool_config');
-const {respuesta, mensajeDeError} = require('./../global');
+const {respuesta, mensajeDeError, tablaInsgnias, tablaUsuarios} = require('./../global');
 const {upload} = require('./../localMutler');
 
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const tablaInsgnias = 'insignias' // Nombre de la tabla de usuarios dentro de la base de datos
 
 /*
     Función para conseguir información de todos los usuarios
 */
 const conseguirInsignias = (request, response) => {
     const query = `
-        SELECT userName, nombre, estado, foto, descripcion, insigniaFavorita 
+        SELECT titulo, descripcion 
         FROM ${tablaInsgnias} 
         ORDER BY insigniaID ASC
     `;
@@ -22,10 +22,113 @@ const conseguirInsignias = (request, response) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
-        return response.status(200).json(results.rows)
+        let msg = 'Insignias conseguidas correctamente';
+        return respuesta(response, msg, 200, {msg, data: results.rows});
     })
 }
 
+const conseguirInsigniaPorTitulo = (request, response) => {
+    const titulo = request.params.titulo;
+    const query = `
+        SELECT titulo, descripcion 
+        FROM ${tablaInsgnias} 
+        WHERE titulo = $1
+    `;
+    pool.query(query, [titulo], (error, results) => {
+        if (error) {
+            return mensajeDeError(response, error, error.detail, error.detail, 408);
+        }
+        let msg = 'Insignia conseguida correctamente';
+        return respuesta(response, msg, 200, {msg, data: results.rows});
+    })
+}
+
+const crearInsignia = (request, response) => {
+    jwt.verify(request.token, SECRET_KEY, (err, authData) => {
+
+        if(err) {
+            return response.sendStatus(403);
+        } else {
+            const adminUsername = authData.user.username
+            const query = `
+                SELECT username, soiadmin 
+                FROM ${tablaUsuarios} 
+                WHERE username = $1
+            `;
+            pool.query(query, [adminUsername], (error, results) => {
+                if (error) {
+                    return mensajeDeError(response, error, error.detail, error.detail, 408);
+                }
+                if (results.rows[0].soiadmin) {
+                    const id = uuidv4();
+                    const {titulo, descripcion} = request.body;
+                    const query = `
+                        INSERT INTO ${tablaInsgnias} 
+                        (insigniaID, titulo, descripcion) VALUES 
+                        ($1,         $2,     $3)
+                    `;
+                    pool.query(query, [id, titulo, descripcion], (error, results) => {
+                        if (error) {
+                            return mensajeDeError(response, error, error.detail, error.detail, 408);
+                        }
+                        let msg = 'Insignia creada correctamente';
+                        return respuesta(response, msg, 200, {msg, data: {titulo, descripcion}});
+                    })
+                } else {
+                    return response.sendStatus(403);
+                }
+            });
+        }
+    });
+}
+
+const actualizarInsignia = (request, response) => {
+    jwt.verify(request.token, SECRET_KEY, (err, authData) => {
+
+        if(err) {
+            return response.sendStatus(403);
+        } else {
+            const adminUsername = authData.user.username
+            const query = `
+                SELECT username, soiadmin 
+                FROM ${tablaUsuarios} 
+                WHERE username = $1
+            `;
+            pool.query(query, [adminUsername], (error, results) => {
+                if (error) {
+                    return mensajeDeError(response, error, error.detail, error.detail, 408);
+                }
+                if (results.rows[0].soiadmin) {
+                    const titulo = request.params.titulo;
+                    const {nuevoTitulo, descripcion} = request.body;
+                    const query = `
+                        UPDATE ${tablaInsgnias} 
+                        SET titulo = $1, descripcion = $2
+                        WHERE titulo = $3
+                    `;
+                    pool.query(query, [nuevoTitulo, descripcion, titulo], (error, results) => {
+                        if (error) {
+                            return mensajeDeError(response, error, error.detail, error.detail, 408);
+                        }
+                        if (results.rowCount > 0) {
+                            let msg = 'Insignia actualizada correctamente';
+                            return respuesta(response, msg, 200, {msg, data: {titulo, nuevoTitulo, descripcion}});
+                        } else {
+                            let msg = 'No se encontró la insignia';
+                            return mensajeDeError(response, '', msg, msg, 404);
+                        }
+                    })
+                } else {
+                    return response.sendStatus(403);
+                }
+            });
+        }
+    });
+}
+
 module.exports = {
-    conseguirInsignias
+    conseguirInsignias,
+    conseguirInsigniaPorTitulo,
+    crearInsignia,
+    actualizarInsignia
 }

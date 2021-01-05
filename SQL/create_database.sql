@@ -4,7 +4,7 @@
 
 CREATE TABLE Insignias (
     insigniaID varchar(40) NOT NULL UNIQUE,
-    titulo varchar(20) NOT NULL,
+    titulo varchar(20) NOT NULL UNIQUE,
     descripcion varchar (100),
 
     PRIMARY KEY (insigniaID)
