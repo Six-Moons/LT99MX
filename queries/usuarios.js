@@ -270,7 +270,7 @@ const borrarUsuario = (request, response) => {
 
                     // Busca el path de la foto del usuario a borrar
                     const queryPath = `
-                        SELECT foto
+                        SELECT foto, userID
                         FROM ${tablaUsuarios} 
                         WHERE username = $1
                     `;
@@ -280,7 +280,7 @@ const borrarUsuario = (request, response) => {
                         }
 
                         // Borra la foto del usuario que se quiere borrar
-                        const {foto} = results.rows[0];
+                        const {foto, userid} = results.rows[0];
                         if (foto) {
                             fs.unlink(foto, (err) => {
                                 if (err) {
@@ -290,18 +290,29 @@ const borrarUsuario = (request, response) => {
                             })
                         }
 
-                        // Borra el usuario
+                        // Borra las insignias obtenidas por el usuario
                         const query = `
-                            DELETE FROM ${tablaUsuarios} 
-                            WHERE username = $1
+                            DELETE FROM ${tablaInsgniasObtenidas} 
+                            WHERE userid = $1
                         `;
-                        pool.query(query, [username], (error, results) => {
+                        pool.query(query, [userid], (error, results) => {
                             if (error) {
                                 throw error
                             }
-                            let msg = ((results.rowCount > 0) ? `Se borró el usuario ${username} correctamente` : 'No se encontró el usuario');
-                            return respuesta(response, msg, 200, {msg});
+                            // Borra el usuario
+                            const query = `
+                                DELETE FROM ${tablaUsuarios} 
+                                WHERE username = $1
+                            `;
+                            pool.query(query, [username], (error, results) => {
+                                if (error) {
+                                    throw error
+                                }
+                                let msg = ((results.rowCount > 0) ? `Se borró el usuario ${username} correctamente` : 'No se encontró el usuario');
+                                return respuesta(response, msg, 200, {msg});
+                            })
                         })
+
                     });
                 } else {
                     return response.sendStatus(403);
