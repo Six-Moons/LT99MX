@@ -1,7 +1,7 @@
 require('dotenv').config()
 const {SECRET_KEY} = process.env;
 const {pool} = require('./pool_config');
-const {respuesta, mensajeDeError, tablaInsgnias, tablaUsuarios} = require('./../global');
+const {respuesta, mensajeDeError, tablaInsignias, tablaUsuarios} = require('./../global');
 const {upload} = require('./../localMutler');
 
 const { v4: uuidv4 } = require('uuid');
@@ -15,7 +15,7 @@ const fs = require('fs');
 const conseguirInsignias = (request, response) => {
     const query = `
         SELECT titulo, descripcion 
-        FROM ${tablaInsgnias} 
+        FROM ${tablaInsignias} 
         ORDER BY insigniaID ASC
     `;
     pool.query(query, (error, results) => {
@@ -31,7 +31,7 @@ const conseguirInsigniaPorTitulo = (request, response) => {
     const titulo = request.params.titulo;
     const query = `
         SELECT titulo, descripcion 
-        FROM ${tablaInsgnias} 
+        FROM ${tablaInsignias} 
         WHERE titulo = $1
     `;
     pool.query(query, [titulo], (error, results) => {
@@ -63,7 +63,7 @@ const crearInsignia = (request, response) => {
                     const id = uuidv4();
                     const {titulo, descripcion} = request.body;
                     const query = `
-                        INSERT INTO ${tablaInsgnias} 
+                        INSERT INTO ${tablaInsignias} 
                         (insigniaID, titulo, descripcion) VALUES 
                         ($1,         $2,     $3)
                     `;
@@ -102,7 +102,7 @@ const actualizarInsignia = (request, response) => {
                     const titulo = request.params.titulo;
                     const {nuevoTitulo, descripcion} = request.body;
                     const query = `
-                        UPDATE ${tablaInsgnias} 
+                        UPDATE ${tablaInsignias} 
                         SET titulo = $1, descripcion = $2
                         WHERE titulo = $3
                     `;

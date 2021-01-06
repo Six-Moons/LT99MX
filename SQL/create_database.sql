@@ -27,7 +27,7 @@ CREATE TABLE Usuarios (
 );
 
 CREATE TABLE InsigniaObtenida (
-    userID varchar(40) NOT NULL UNIQUE,
+    userID varchar(40) NOT NULL,
     insigniaID varchar(40) NOT NULL,
     fechaDeObtencion date NOT NULL,
 
