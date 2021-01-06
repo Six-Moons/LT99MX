@@ -1,13 +1,13 @@
 require('dotenv').config()
 const {SECRET_KEY, SALT_ROUNDS} = process.env;
 const {pool} = require('./pool_config');
-const {respuesta, mensajeDeError, tablaUsuarios} = require('./../global');
+const {respuesta, mensajeDeError, tablaUsuarios, tablaInsgniasObtenidas, tablaInsgnias} = require('./../global');
 const {upload} = require('./../localMutler');
 
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const fs = require('fs')
+const fs = require('fs');
 
 /*
     Función para conseguir información de todos los usuarios
@@ -244,7 +244,7 @@ const actualizarUsuario = (request, response) => {
 /*
     Funnción para borrar un usuario.
 */
-const borrarUsuario = (request,     response) => {
+const borrarUsuario = (request, response) => {
 
     // Verifica que el webtoken dado por el usuario sea correcta
     jwt.verify(request.token, SECRET_KEY, (err, authData) => {
@@ -313,11 +313,92 @@ const borrarUsuario = (request,     response) => {
     });
 }
 
+const asignarInsigniaUsuario = (request, response) => {
+// Verifica que el webtoken dado por el usuario sea correcta
+jwt.verify(request.token, SECRET_KEY, (err, authData) => {
+    if(err) {
+        return response.sendStatus(403);
+    } else {
+
+        // Checa si el usuario haciendo el request es administrador
+        let adminUsername = authData.user.username
+        const query = `
+            SELECT userName, soiadmin 
+            FROM ${tablaUsuarios} 
+            WHERE username = $1
+        `;
+        pool.query(query, [adminUsername], (error, results) => {
+            if (error) {
+                return mensajeDeError(response, error, error.detail, error.detail, 408);
+            }
+
+            // Comprueba si el usuario que hizo el request es admin
+            if (results.rows[0].soiadmin) {
+                const {username, titulo} = request.body
+
+                // Busca el path de la foto del usuario a borrar
+                const queryPath = `
+                    SELECT userID
+                    FROM ${tablaUsuarios} 
+                    WHERE username = $1
+                `;
+                pool.query(queryPath, [username], (error, results) => {
+                    if (error) {
+                        return mensajeDeError(response, error, error.detail, error.detail, 408);
+                    }
+                    if (results.rows[0]) {
+                        const userID = results.rows[0].userid;
+                        const queryPath = `
+                            SELECT insigniaID
+                            FROM ${tablaInsgnias} 
+                            WHERE titulo = $1
+                        `;
+                        pool.query(queryPath, [titulo], (error, results) => {
+                            if (error) {
+                                return mensajeDeError(response, error, error.detail, error.detail, 408);
+                            }
+                            if (results.rows[0]) {
+                                const insigniaID = results.rows[0].insigniaid;
+                                const fecha = new Date();
+        
+                                const query = `
+                                    INSERT INTO ${tablaInsgniasObtenidas} 
+                                    (userID, insigniaID, fechaDeObtencion) VALUES 
+                                    ($1, $2, $3)
+                                `;
+                                pool.query(query, [userID, insigniaID, fecha], (error, results) => {
+                                    if (error) {
+                                        return mensajeDeError(response, error, error.detail, error.detail, 408);
+                                    }
+                                    
+                                    let msg = `Se asignó correctamente la insignia ${titulo} a ${username}`;
+                                    return respuesta(response, msg, 200, {msg, username, titulo});
+                                });
+                            } else {
+                                let msg = 'Insignia no encontrada'
+                                return mensajeDeError(response, '', msg, msg, 408);
+                            }
+                            
+                        });
+                    } else {
+                        let msg = 'Usuario no encontrado'
+                        return mensajeDeError(response, '', msg, msg, 408);
+                    }
+                });
+            } else {
+                return response.sendStatus(403);
+            }
+        })
+    }
+});
+}
+
 module.exports = {
     conseguirUsuarios,
     conseguirUsuarioPorUsername,
     crearUsuario,
     actualizarUsuario,
     borrarUsuario,
-    login
+    login,
+    asignarInsigniaUsuario
 }

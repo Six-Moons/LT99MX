@@ -30,11 +30,13 @@ const verifyToken = (req, res, next) => {
 
 const tablaUsuarios = 'usuarios'  // Nombre de la tabla de usuarios dentro de la base de datos
 const tablaInsgnias = 'insignias' // Nombre de la tabla de usuarios dentro de la base de datos
+const tablaInsgniasObtenidas = 'InsigniaObtenida' // Nombre de la tabla de usuarios dentro de la base de datos
 
 module.exports = {
     respuesta,
 	mensajeDeError,
     verifyToken,
     tablaUsuarios,
-    tablaInsgnias
+    tablaInsgnias,
+    tablaInsgniasObtenidas
 }

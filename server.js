@@ -50,6 +50,7 @@ app.get   ('/usuarios/conseguirUsuarios',                        usuarios.conseg
 app.get   ('/usuarios/conseguirUsuario/:username',               usuarios.conseguirUsuarioPorUsername)
 app.post  ('/usuarios/login',                                    usuarios.login)
 app.post  ('/usuarios/crearUsuario',                             usuarios.crearUsuario)
+app.post  ('/usuarios/asignarInsigniaUsuario',      verifyToken, usuarios.asignarInsigniaUsuario)
 app.put   ('/usuarios/actualizarUsuario/:username', verifyToken, usuarios.actualizarUsuario)
 app.delete('/usuarios/borrarUsuario/:username',     verifyToken, usuarios.borrarUsuario)
 
