@@ -18,42 +18,11 @@ const conseguirUsuarios = (request, response) => {
         FROM ${tablaUsuarios}
     `;
 
-    // const query = `
-    //     SELECT ${tablaUsuarios}.username, ${tablaUsuarios}.nombre, ${tablaUsuarios}.estado, ${tablaUsuarios}.foto, ${tablaUsuarios}.descripcion, ${tablaUsuarios}.insigniaFavorita, ${tablaInsignias}.titulo, ${tablaInsignias}.descripcion 
-    //     FROM ${tablaUsuarios}, ${tablaInsignias}, 
-    //     WHERE insigniaID in (
-    //         SELECT insigniaID, 
-    //         FROM ${tablaUsuarios}, ${tablaInsignias}, ${tablaInsigniasObtenidas}
-    //         WHERE ${tablaUsuarios}.userID = ${tablaInsigniasObtenidas}.userID and ${tablaInsignias}.insigniaID = ${tablaInsigniasObtenidas}.insigniaID
-    //     )
-    // `;
-
     pool.query(query, (error, results) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
         const resultadosUsuarios = results.rows;
-        // return response.status(200).json(results.rows);
-
-        // const queryUsuario = (username) => {
-        //     const query = `
-        //         SELECT ${tablaInsignias}.titulo, ${tablaInsignias}.descripcion 
-        //         FROM ${tablaUsuarios} as user, ${tablaInsignias} as ins, ${tablaInsigniasObtenidas} as obt
-        //         WHERE ${tablaUsuarios}.username = $1 and ${tablaUsuarios}.userID = ${tablaInsigniasObtenidas}.userID and ${tablaInsignias}.insigniaID = ${tablaInsigniasObtenidas}.insigniaID
-        //     `;
-        //     pool.query(query, [username], (error, results) => {
-        //         if (error) {
-        //             return mensajeDeError(response, error, error.detail, error.detail, 408);
-        //         }
-        //         return results.rows;
-        //     });
-        // }
-
-        // const queryInsigniaFavorita = `
-        //     SELECT ${tablaInsignias}.titulo, ${tablaInsignias}.descripcion 
-        //     FROM ${tablaUsuarios}, ${tablaInsignias}, ${tablaInsigniasObtenidas}
-        //     WHERE ${tablaUsuarios}.username = $1 and ${tablaUsuarios}.userID = ${tablaInsigniasObtenidas}.userID and ${tablaInsignias}.insigniaID = ${tablaInsigniasObtenidas}.insigniaID
-        // `;
 
         const queryInsigniaFavorita = `
             SELECT username, titulo, ${tablaInsignias}.descripcion 
@@ -65,20 +34,12 @@ const conseguirUsuarios = (request, response) => {
         let insigniasFavoritas = [];
         resultadosUsuarios.forEach(usuario => {
             promesas.push(pool.query(queryInsigniaFavorita, [usuario.username]))
-            // promesas.push(pool.query(queryInsigniaFavorita))
         })
 
         Promise.all(promesas).then(values => {
-            // console.log(values); // [3, 1337, "foo"]
             values.forEach(element => {
                 insigniasFavoritas.push(...element.rows);
             });
-            // console.log(insigniasFavoritas);
-            // const query = `
-            //     SELECT * 
-            //     FROM ${tablaInsignias} 
-            //     ORDER BY titulo ASC
-            // `;
 
             const query = `
                 SELECT titulo, ${tablaInsignias}.descripcion, username
@@ -90,15 +51,11 @@ const conseguirUsuarios = (request, response) => {
                 }
                 const resultadosInsignias = results.rows;
 
-                let user = {resultadosUsuarios, insigniasFavoritas, resultadosInsignias};
-
                 let data = [];
                 resultadosUsuarios.forEach(usuario => {
-                    // console.log(usuario);
                     const {username, nombre, estado, foto, descripcion} = usuario;
                     let user = {username, nombre, estado, foto, descripcion, insigniafavorita: null, insignias: []};
                     insigniasFavoritas.forEach(favorita => {
-                        console.log(favorita);
                         if (favorita.username == username) {
                             const {titulo, descripcion} = favorita;
                             user.insigniafavorita = {titulo, descripcion};
@@ -106,7 +63,6 @@ const conseguirUsuarios = (request, response) => {
                     });
 
                     resultadosInsignias.forEach(insignia => {
-                        console.log(insignia);
                         if (insignia.username == username) {
                             const {titulo, descripcion} = insignia;
                             user.insignias.push({titulo, descripcion});
@@ -116,41 +72,9 @@ const conseguirUsuarios = (request, response) => {
                     data.push(user);
                 })
 
-
-                /*
-                    userid: 'b46b0af1-41ea-4fdb-a091-7b9cb426931b',
-                    username: 'alegayndra',
-                    nombre: 'Ale',
-                    estado: 'NL',
-                    foto: 'uploads/75dee1b0-4964-480e-b293-9af9745731cb-1609975569258.jpg',
-                    descripcion: 'peepee',
-                    insigniafavorita: 'd6901292-a3a3-4922-8865-ac514b37ef67'
-                */
-
                 return response.status(200).json(data);
-                // const query = `
-                //     SELECT * 
-                //     FROM ${tablaInsigniasObtenidas} 
-                // `;
-                // pool.query(query, (error, results) => {
-                //     if (error) {
-                //         return mensajeDeError(response, error, error.detail, error.detail, 408);
-                //     }
-                //     const resultadosInsigniasObtenidas = results.rows;
-                //     let data = [];
-                //     resultadosUsuarios.forEach(usuario => {
-                //         const {username, nombre, estado, foto, descripcion, insigniaFavorita} = usuario;
-                //         let insignias = [];
-                //         resultadosInsignias.forEach(insignia => {
-    
-                //         });
-                //     })
-                //     console.log(resultadosUsuarios);
-                //     let msg = 'Usuarios conseguidos correctamente'
-                //     return respuesta(response, msg, 200, {msg});
-                // });
+                
             });
-            // return response.status(200).json(insigniasFavoritas);
         });
 
     })
