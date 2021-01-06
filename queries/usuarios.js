@@ -22,6 +22,7 @@ const conseguirUsuarios = (request, response) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
+
         const resultadosUsuarios = results.rows;
 
         const queryInsigniaFavorita = `
@@ -55,6 +56,7 @@ const conseguirUsuarios = (request, response) => {
                 resultadosUsuarios.forEach(usuario => {
                     const {username, nombre, estado, foto, descripcion} = usuario;
                     let user = {username, nombre, estado, foto, descripcion, insigniafavorita: null, insignias: []};
+                    
                     insigniasFavoritas.forEach(favorita => {
                         if (favorita.username == username) {
                             const {titulo, descripcion} = favorita;
@@ -73,11 +75,9 @@ const conseguirUsuarios = (request, response) => {
                 })
 
                 return response.status(200).json(data);
-                
             });
         });
-
-    })
+    });
 }
 
 /*
@@ -86,7 +86,7 @@ const conseguirUsuarios = (request, response) => {
 const conseguirUsuarioPorUsername = (request, response) => {
     const username = request.params.username;
     const query = `
-        SELECT userName, nombre, estado, foto, descripcion, insigniaFavorita 
+        SELECT userID, userName, nombre, estado, foto, descripcion, insigniaFavorita 
         FROM ${tablaUsuarios} 
         WHERE username = $1
     `;
@@ -94,8 +94,39 @@ const conseguirUsuarioPorUsername = (request, response) => {
         if (error) {
             return mensajeDeError(response, error, error.detail, error.detail, 408);
         }
-        return response.status(200).json(results.rows[0])
-    })
+
+        const resultadosUsuarios = results.rows[0];
+        const userID = resultadosUsuarios.userid;
+
+        const queryInsigniaFavorita = `
+            SELECT titulo, descripcion 
+            FROM ${tablaInsignias}
+            WHERE ${tablaInsignias}.insigniaID = $1
+        `;
+        pool.query(queryInsigniaFavorita, [results.rows[0].insigniafavorita], (error, results) => {
+
+            const {titulo, descripcion} = results.rows[0];
+            const insigniaFavorita = {titulo, descripcion};
+
+            const query = `
+                SELECT titulo, descripcion
+                FROM ${tablaInsignias} INNER JOIN ${tablaInsigniasObtenidas} ON (${tablaInsignias}.insigniaID = ${tablaInsigniasObtenidas}.insigniaID)
+                WHERE ${tablaInsigniasObtenidas}.userID = $1
+            `;
+            pool.query(query, [userID], (error, results) => {
+                if (error) {
+                    return mensajeDeError(response, error, error.detail, error.detail, 408);
+                }
+
+                const resultadosInsignias = results.rows;
+    
+                const {username, nombre, estado, foto, descripcion} = resultadosUsuarios;
+                let user = {username, nombre, estado, foto, descripcion, insigniafavorita: insigniaFavorita || null, insignias: resultadosInsignias};
+            
+                return response.status(200).json(user);
+            });
+        });
+    });
 }
 
 /*
