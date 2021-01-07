@@ -116,6 +116,21 @@
             </b-form-group>
 
             <b-form-group
+              id="profile-telephone-group"
+              label="Celular:"
+              label-for="profile-telephone"
+            >
+              <b-form-input
+                id="profile-telephone"
+                v-model="profile_data.telephone"
+                type="tel"
+                placeholder="Número de teléfono"
+                :value="telephone"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
               id="profile-state-group"
               label="Estado:"
               label-for="profile-state"
@@ -203,6 +218,7 @@ export default {
         password: "",
         passwordConfirmation: "",
         description: "",
+        telephone: "",
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
@@ -247,6 +263,7 @@ export default {
     this.profile_data.username = this.username;
     this.profile_data.state = this.state;
     this.profile_data.description = this.description;
+    this.profile_data.telephone = "555-555-5555";
   },
   methods: {
     changePhoto() {
