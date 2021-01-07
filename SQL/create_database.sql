@@ -18,6 +18,8 @@ CREATE TABLE Usuarios (
     contrasenia varchar(65) NOT NULL,
     nombre varchar(50) NOT NULL,
     estado varchar(20) NOT NULL,
+    telefono varchar(20) NOT NULL,
+    division varchar(2) NOT NULL,
     foto varchar(100),
     descripcion varchar(140),
     insigniaFavorita varchar(40),
@@ -47,19 +49,22 @@ CREATE TABLE Noticias (
 );
 
 CREATE TABLE Partidas (
-    fechaDeJugacion date NOT NULL UNIQUE,
+    fechaDeJugacion date NOT NULL,
     jornada int NOT NULL,
     partida int NOT NULL,
+    division varchar(2) NOT NULL,
 
-    PRIMARY KEY (fechaDeJugacion)
+    PRIMARY KEY (fechaDeJugacion, division)
 );
 
 CREATE TABLE Participaciones (
     fechaDeJugacion date NOT NULL,
     userID varchar(40) NOT NULL,
-    posicion int,
+    posicion int NOT NULL,
+    division varchar(2) NOT NULL
 
-    PRIMARY KEY (fechaDeJugacion, userID),
+    PRIMARY KEY (fechaDeJugacion, userID, division),
     FOREIGN KEY (fechaDeJugacion) references Partidas(fechaDeJugacion),
+    FOREIGN KEY (division) references Partidas(division),
     FOREIGN KEY (userID) references Usuarios(userID)
 );
