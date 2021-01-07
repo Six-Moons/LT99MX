@@ -10,7 +10,7 @@
     <b-nav vertical id="nav">
       <b-nav-item exact-active-class="active" to="/" link-classes="text-light">
         <div class="nav-div red show-xl">
-          <tetromino :href="svgs.Z"></tetromino> Tetris
+          <tetromino :href="svgs.Z"></tetromino> Inicio
         </div>
         <div class="hide-xs hide-xl">
           <b-icon-house-fill class="nav-icon i-red"></b-icon-house-fill>
@@ -46,7 +46,7 @@
         link-classes="text-light"
       >
         <div class="nav-div green show-xl">
-          <tetromino :href="svgs.S"></tetromino> FAQ/Comentarios
+          <tetromino :href="svgs.S"></tetromino> Sobre nosotros
         </div>
         <div class="hide-xs hide-xl">
           <b-icon-question class="nav-icon i-green"></b-icon-question>
@@ -165,6 +165,7 @@ export default {
 .nav-div {
   border-radius: 9999px;
   padding-left: 0.5em;
+  font-weight: bold;
 }
 
 .nav-icon {
