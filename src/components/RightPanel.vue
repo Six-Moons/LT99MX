@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 #right-panel {
-  margin-top: 1em;
+  padding-top: 1em;
   height: calc(100vh - 1em);
   overflow-y: scroll;
 }
