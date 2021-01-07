@@ -1,0 +1,2 @@
+#! /bin/bash
+more SQL/create_database.sql | psql -d tetris_test -U aleuwu 
