@@ -110,18 +110,12 @@ export default {
   data() {
     return {
       svgs: {
-        Z:
-          "https://upload.wikimedia.org/wikipedia/commons/6/61/Tetromino_Z.svg",
-        L:
-          "https://upload.wikimedia.org/wikipedia/commons/a/aa/Tetromino_L.svg",
-        O:
-          "https://upload.wikimedia.org/wikipedia/commons/f/fc/Tetromino_O.svg",
-        S:
-          "https://upload.wikimedia.org/wikipedia/commons/d/d3/Tetromino_S.svg",
-        J:
-          "https://upload.wikimedia.org/wikipedia/commons/f/fd/Tetromino_J.svg",
-        T:
-          "https://upload.wikimedia.org/wikipedia/commons/4/41/Tetromino_T.svg",
+        Z: require("@/assets/tetrominos/Z.svg"),
+        L: require("@/assets/tetrominos/L.svg"),
+        O: require("@/assets/tetrominos/O.svg"),
+        S: require("@/assets/tetrominos/S.svg"),
+        J: require("@/assets/tetrominos/J.svg"),
+        T: require("@/assets/tetrominos/T.svg"),
       },
     };
   },
@@ -137,7 +131,6 @@ export default {
   #nav {
     font-size: 1.7vw;
     color: var(--light);
-    margin-left: 3vw;
   }
 }
 
@@ -163,17 +156,13 @@ export default {
 }
 
 .nav-div {
-  border-radius: 9999px;
+  /* border-radius: 9999px; */
   padding-left: 0.5em;
 }
 
 .nav-icon {
   width: 3.4vw;
   height: 3.4vw;
-}
-
-.red {
-  width: 9vw;
 }
 
 #nav li:hover > a > .red,
@@ -186,10 +175,6 @@ export default {
   fill: var(--red);
 }
 
-.orange {
-  width: 12vw;
-}
-
 #nav li:hover > a > .orange,
 .active > .orange {
   background-color: var(--orange);
@@ -198,10 +183,6 @@ export default {
 #nav li:hover > a > div > .i-orange,
 .active > div > .i-orange {
   fill: var(--orange);
-}
-
-.yellow {
-  width: 11vw;
 }
 
 #nav li:hover > a > .yellow,
@@ -215,10 +196,6 @@ export default {
   fill: var(--yellow);
 }
 
-.green {
-  width: 19.5vw;
-}
-
 #nav li:hover > a > .green,
 .active > .green {
   background-color: var(--green);
@@ -229,10 +206,6 @@ export default {
   fill: var(--green);
 }
 
-.blue {
-  width: 14.5vw;
-}
-
 #nav li:hover > a > .blue,
 .active > .blue {
   background-color: var(--blue);
@@ -241,14 +214,6 @@ export default {
 #nav li:hover > a > div > .i-blue,
 .active > div > .i-blue {
   fill: var(--blue);
-}
-
-#mi-cuenta-link {
-  width: 12.5vw;
-}
-
-#iniciar-sesion-link {
-  width: 15.5vw;
 }
 
 #nav li:hover > a > .purple,
