@@ -127,11 +127,17 @@
               >
                 <b-card-body>
                   <b-card-text>
-                    <img
-                      src="../assets/conducta.jpeg"
-                      class="img-fluid"
-                      alt="Codigo de conducta"
-                  /></b-card-text>
+                    <p> La Liga Mexicana Tetris99 fue creada por un grupo de voluntarios para acercar a los jugadores de Tetris de toda la República Mexicana. La Liga es un lugar donde los jugadores pueden ser ellxs mismxs con confianza, libres de bullying, odio y acoso. </p>
+                    <p> Es importante que trates a otros jugadores de la forma en la que te gustaría que te traten. Si no estás segurx de si tus acciones o compartamientos podrían violar las reglas de la comunidad, recuerda cómo actuarías si estuvieras en un evento </p>
+                    <p> Algunas guías para recordar:
+                      <ul>
+                        <li> Tetris99 es para toodxs. La Liga es tu <strong> comunidad </strong></li> 
+                        <li> El <strong> odio, acoso y bullying </strong>no tienen cabida en La Liga.</li> 
+                        <li> Al jugar con otras personas, mantén un espíritu deportivo <strong>ya sea que ganes o pierdas.</strong></li> 
+                        <li> Recuerda cuidar la línea entre una convivencia en confianza y un comportamiento abusivo o malicioso.</li> 
+                        <li> No seas un troll, a nadie le gustan los trolls.</li> 
+                        <li> Sobre todas las cosas, demuestra tus mejores valores en todo momento.</li> 
+                        </ul></p> </b-card-text>
                 </b-card-body>
               </b-collapse>
             </b-card>
@@ -149,11 +155,9 @@
               >
                 <b-card-body>
                   <b-card-text>
-                    <img
-                      src="../assets/puntuaciones.jpeg"
-                      class="img-fluid"
-                      alt="Sistema de puntuaciones"
-                  /></b-card-text>
+                    <div>
+                      <b-table small responsive :items="items"></b-table></div
+                  ></b-card-text>
                 </b-card-body>
               </b-collapse>
             </b-card>
@@ -312,6 +316,25 @@ export default {
   name: "Faq",
   components: {
     RightPanel,
+  },
+  data() {
+    return {
+      items: [
+        { Posiciones: "1", Puntos: "20" },
+        { Posiciones: "2", Puntos: "17" },
+        { Posiciones: "3", Puntos: "15" },
+        { Posiciones: "4-10", Puntos: "13" },
+        { Posiciones: "11-20", Puntos: "10" },
+        { Posiciones: "21-30", Puntos: "9" },
+        { Posiciones: "31-40", Puntos: "8" },
+        { Posiciones: "41-50", Puntos: "7" },
+        { Posiciones: "51-60", Puntos: "6" },
+        { Posiciones: "61-70", Puntos: "5" },
+        { Posiciones: "71-80", Puntos: "4" },
+        { Posiciones: "81-90", Puntos: "3" },
+        { Posiciones: "91-99", Puntos: "1" },
+      ],
+    };
   },
 };
 </script>
