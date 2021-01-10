@@ -51,7 +51,7 @@ export default {
   components: { LeftPanel },
   data() {
     return {
-      loggedIn: false,
+      loggedIn: !false,
     };
   },
   methods: {
