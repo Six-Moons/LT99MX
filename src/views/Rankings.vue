@@ -11,8 +11,27 @@
         :title="table.version"
         title-item-class="bg-dark"
         title-link-class="tab-title text-light"
-      >
-        <b-table hover :items="table.posiciones"></b-table>
+        ><b-tabs
+          content-class="mt-3"
+          justified
+          active-nav-item-class="bg-light text-dark"
+          v-show="table.version === 'Tetris99'"
+        >
+          <b-tab
+            v-for="liga in table.ligas"
+            v-bind:key="liga.liga"
+            :title="liga.liga"
+            title-item-class="bg-dark"
+            title-link-class="tab-title text-light"
+          >
+            <b-table hover :items="liga.posiciones"></b-table>
+          </b-tab>
+        </b-tabs>
+        <b-table
+          v-show="table.version !== 'Tetris99'"
+          hover
+          :items="table.posiciones"
+        ></b-table>
       </b-tab>
     </b-tabs>
   </div>
@@ -26,39 +45,51 @@ export default {
       tables: [
         {
           version: "Tetris99",
-          posiciones: [
-            { posición: 1, nombre: "Delta", puntos: 100 },
-            { posición: 1, nombre: "Nilirias", puntos: 100 },
-            { posición: 1, nombre: "Aza", puntos: 100 },
-            { posición: 1, nombre: "Victoria", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
-            { posición: 1, nombre: "Rod10s", puntos: 100 },
+          ligas: [
+            {
+              liga: "División A",
+              posiciones: [
+                { posición: 1, nombre: "Delta", puntos: 100 },
+                { posición: 1, nombre: "Nilirias", puntos: 100 },
+                { posición: 1, nombre: "Aza", puntos: 100 },
+                { posición: 1, nombre: "Victoria", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+              ],
+            },
+            {
+              liga: "División B",
+              posiciones: [
+                { posición: 1, nombre: "Delta", puntos: 100 },
+                { posición: 1, nombre: "Nilirias", puntos: 100 },
+                { posición: 1, nombre: "Aza", puntos: 100 },
+                { posición: 1, nombre: "Victoria", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+                { posición: 1, nombre: "Rod10s", puntos: 100 },
+              ],
+            },
           ],
         },
         {
