@@ -36,8 +36,9 @@
       <left-panel
         class="col-1 col-xl-3 bg-dark hide-xs"
         :session="loggedIn"
+        @loggedOut="updateSession"
       ></left-panel>
-      <router-view class="col-sm-11 col-xl-9" />
+      <router-view class="col-sm-11 col-xl-9" @loggedIn="updateSession" />
     </div>
   </div>
 </template>
@@ -50,8 +51,14 @@ export default {
   components: { LeftPanel },
   data() {
     return {
-      loggedIn: !false,
+      loggedIn: false,
     };
+  },
+  methods: {
+    updateSession(authenticated) {
+      this.loggedIn = authenticated;
+      console.log("Here");
+    },
   },
 };
 </script>

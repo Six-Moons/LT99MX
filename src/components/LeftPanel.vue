@@ -94,15 +94,18 @@
       </b-nav-item>
     </b-nav>
     <div class="show-xl logout">
-      <a class="btn btn-lg btn-danger logout-btn" href="#Logout">
+      <button class="btn btn-lg btn-danger logout-btn" @click="logout">
         Cerrar Sesión
-      </a>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import Tetromino from "./Tetromino.vue";
+import { logoutUser } from "../reqs/auth";
+import router from "../router";
+
 export default {
   components: { Tetromino },
   name: "LeftPanel",
@@ -118,6 +121,15 @@ export default {
         T: require("@/assets/tetrominos/T.svg"),
       },
     };
+  },
+  methods: {
+    async logout() {
+      const loggedOut = await logoutUser();
+      if (loggedOut) {
+        this.$emit("loggedOut", false);
+        router.push("/");
+      }
+    },
   },
 };
 </script>

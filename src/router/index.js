@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
 import Rankings from '../views/Rankings.vue';
 import LogIn from '../views/LogIn.vue';
+import News from '../views/News.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/log-in',
     name: 'Log In',
     component: LogIn
+  },
+  {
+    path: '/noticias',
+    name: 'News',
+    component: News
   }
 ];
 
