@@ -45,13 +45,14 @@
 
 <script>
 import LeftPanel from "./components/LeftPanel.vue";
+import { checkAuthenticated } from "./reqs/user";
 
 export default {
   name: "App",
   components: { LeftPanel },
   data() {
     return {
-      loggedIn: !false,
+      loggedIn: false,
     };
   },
   methods: {
@@ -59,6 +60,9 @@ export default {
       this.loggedIn = authenticated;
       console.log("Here");
     },
+  },
+  async created() {
+    this.loggedIn = await checkAuthenticated();
   },
 };
 </script>
