@@ -4,7 +4,7 @@ const API_URL = "http://localhost:8000/";
 const registerUser = async (data) => {
   console.log(JSON.stringify(data));
 
-  await fetch(API_URL + "users", {
+  await fetch(API_URL + "auth/local/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

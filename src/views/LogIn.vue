@@ -29,6 +29,7 @@
               id="registration-username"
               placeholder="Nombre de usuario"
               v-model="registrationData.username"
+              maxlength="20"
               required
             ></b-form-input>
           </b-form-group>
