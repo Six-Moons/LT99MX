@@ -30,7 +30,10 @@
               ></b-img>
             </div>
             <hr />
-            <div class="text-center">{{ name }} - {{ state }}</div>
+            <div class="text-center">
+              {{ name }} -
+              {{ stateOptions.filter((elt) => elt.value === state)[0].text }}
+            </div>
             <hr />
           </div>
           <div class="col-sm-5">
@@ -193,84 +196,124 @@
 
 <script>
 import RightPanel from "../components/RightPanel.vue";
+import { getUserData, updateUserData, uploadUserPicture } from "../reqs/user";
 
 export default {
   name: "Profile",
   components: { RightPanel },
   data() {
     return {
-      username: "AAAAAAAAAAAA",
-      favorite_badge: "🥇",
+      username: null,
+      email: null,
+      favorite_badge: null,
       photo_url: "http://placekitten.com/460/460",
-      name: "Fulano Pérez",
-      state: "Tlaxcala",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vehicula quam diam, sit amet egestas nisi volutpat in. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ac neque id enim volutpat dapibus facilisis sed diam. Donec lorem mi, auctor vel nisl eu, sagittis efficitur massa. Maecenas ac. ",
+      name: null,
+      state: null,
+      description: null,
+      telephone: null,
       recentMatches: [
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
         { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
       ],
       profile_data: {
-        email: "cuchicuchi42@gmail.com",
-        username: "",
+        username: null,
+        email: null,
         state: null,
-        password: "",
-        passwordConfirmation: "",
-        description: "",
-        telephone: "",
+        password: null,
+        passwordConfirmation: null,
+        description: null,
+        telephone: null,
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
-        "Aguascalientes",
-        "Baja California",
-        "Baja California Sur",
-        "Campeche",
-        "Chiapas",
-        "Ciudad de México",
-        "Chihuahua",
-        "Coahuila",
-        "Colima",
-        "Durango",
-        "Estado de México",
-        "Guanajuato",
-        "Guerrero",
-        "Hidalgo",
-        "Jalisco",
-        "Michoacán",
-        "Morelos",
-        "Nayarit",
-        "Nuevo León",
-        "Oaxaca",
-        "Puebla",
-        "Querétaro",
-        "Quintana Roo",
-        "San Luis Potosí",
-        "Sinaloa",
-        "Sonora",
-        "Tabasco",
-        "Tamaulipas",
-        "Tlaxcala",
-        "Veracruz",
-        "Yucatán",
-        "Zacatecas",
+        { text: "Aguascalientes", value: "Aguascalientes" },
+        { text: "Baja California", value: "BajaCalifornia" },
+        { text: "Baja California Sur", value: "BajaCaliforniaSur" },
+        { text: "Campeche", value: "Campeche" },
+        { text: "Chiapas", value: "Chiapas" },
+        { text: "Chihuahua", value: "Chihuahua" },
+        { text: "Ciudad de México", value: "CiudadDeMexico" },
+        { text: "Coahuila", value: "Coahuila" },
+        { text: "Colima", value: "Colima" },
+        { text: "Durango", value: "Durango" },
+        { text: "Estado de México", value: "EstadoDeMexico" },
+        { text: "Guanajuato", value: "Guanajuato" },
+        { text: "Guerrero", value: "Guerrero" },
+        { text: "Hidalgo", value: "Hidalgo" },
+        { text: "Jalisco", value: "Jalisco" },
+        { text: "Michoacán", value: "Michoacan" },
+        { text: "Morelos", value: "Morelos" },
+        { text: "Nayarit", value: "Nayarit" },
+        { text: "Nuevo León", value: "NuevoLeon" },
+        { text: "Oaxaca", value: "Oaxaca" },
+        { text: "Puebla", value: "Puebla" },
+        { text: "Querétaro", value: "Queretaro" },
+        { text: "Quintana Roo", value: "QuintanaRoo" },
+        { text: "San Luis Potosí", value: "SanLuisPotosi" },
+        { text: "Sinaloa", value: "Sinaloa" },
+        { text: "Sonora", value: "Sonora" },
+        { text: "Tabasco", value: "Tabasco" },
+        { text: "Tamaulipas", value: "Tamaulipas" },
+        { text: "Tlaxcala", value: "Tlaxcala" },
+        { text: "Veracruz", value: "Veracruz" },
+        { text: "Yucatán", value: "Yucatan" },
+        { text: "Zacatecas", value: "Zacatecas" },
         "Otro",
       ],
       photo_file: null,
     };
   },
-  mounted() {
-    this.profile_data.username = this.username;
-    this.profile_data.state = this.state;
-    this.profile_data.description = this.description;
-    this.profile_data.telephone = "555-555-5555";
+  async mounted() {
+    const userData = await getUserData();
+    this.fillUserData(userData);
   },
   methods: {
+    fillUserData(data) {
+      this.profile_data.username = this.username = data.username;
+      this.email = this.profile_data.email = data.email;
+      this.telephone = this.profile_data.telephone = data.telefono;
+      this.favorite_badge = data.insigniaFavorita;
+      this.profile_data.name = this.name = data.nombre;
+      this.profile_data.state = this.state = data.estado;
+      this.profile_data.description = this.description = data.descripcion;
+    },
     changePhoto() {
       document.querySelector("#photo-input").click();
     },
-    saveEdits() {
-      console.log("Changes saved");
+    validateChanged(edited, original) {
+      return edited && edited !== original && edited !== "";
+    },
+    async saveEdits() {
+      const changedData = {};
+
+      if (this.photo_file) {
+        const new_picture_url = await uploadUserPicture(this.photo_file);
+        this.photo_url = changedData.fotodeperfil
+      }
+
+      if (this.validateChanged(this.profile_data.username, this.username))
+        changedData.username = this.profile_data.username;
+
+      if (this.validateChanged(this.profile_data.email, this.email))
+        changedData.email = this.profile_data.email;
+
+      if (this.validateChanged(this.profile_data.telephone, this.telephone))
+        changedData.telefono = this.profile_data.telephone;
+
+      if (this.validateChanged(this.profile_data.state, this.state))
+        changedData.estado = this.profile_data.state;
+
+      if (
+        this.profile_data.password &&
+        this.profile_data.password === this.profile_data.passwordConfirmation
+      )
+        changedData.password = this.profile_data.password;
+
+      if (this.validateChanged(this.profile_data.description, this.description))
+        changedData.descripcion = this.profile_data.description;
+
+      if (Object.keys(changedData).length) await updateUserData(changedData);
 
       // Change to corresponding POST requests ONCE BACK END IS READY
       this.username = this.profile_data.username;
