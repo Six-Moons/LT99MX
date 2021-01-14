@@ -1,7 +1,7 @@
 <template>
-  <b-card :title="article.title" tag="article" class="mb-2">
+  <b-card :title="article.titulo" tag="article" class="mb-2">
     <b-card-text>
-      {{ article.content }}
+      {{ article.resumen }}
     </b-card-text>
 
     <!-- Reaction buttons -->

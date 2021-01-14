@@ -61,7 +61,7 @@
           </b-carousel-slide>
         </b-carousel>
         <!-- News feed -->
-        <div v-for="article in news" v-bind:key="article.title">
+        <div v-for="article in news" v-bind:key="article.id">
           <news-card class="news-card" :article="article"></news-card>
         </div>
       </div>
@@ -73,6 +73,7 @@
 <script>
 import NewsCard from "../components/NewsCard.vue";
 import RightPanel from "../components/RightPanel.vue";
+import { getNews } from "../reqs/news";
 
 export default {
   name: "Home",
@@ -82,34 +83,11 @@ export default {
   },
   data() {
     return {
-      news: [
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Puyo puyo tetris",
-          content:
-            "Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-      ],
+      news: null,
     };
+  },
+  async mounted() {
+    this.news = await getNews();
   },
 };
 </script>

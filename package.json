@@ -11,7 +11,6 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
-    "jsonwebtoken": "^8.5.1",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9"
   },
