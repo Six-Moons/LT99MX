@@ -5,4 +5,11 @@ const getNews = async () => {
   return news;
 };
 
-export { getNews };
+const getArticle = async (id) => {
+  const article = await fetch(API_URL + "noticias/" + id).then((res) =>
+    res.json()
+  );
+  return article;
+};
+
+export { getNews, getArticle };

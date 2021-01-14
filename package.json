@@ -12,7 +12,8 @@
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-router": "^3.4.9"
+    "vue-router": "^3.4.9",
+    "vue-simple-markdown": "^1.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
