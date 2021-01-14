@@ -1,5 +1,4 @@
-const API_URL = "http://localhost:8000/";
-// const API_URL = "https://ligat99mx-back.herokuapp.com/";
+const API_URL = process.env.VUE_APP_API_URL;
 
 const registerUser = async (data) => {
   console.log(JSON.stringify(data));
