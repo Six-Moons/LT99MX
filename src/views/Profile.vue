@@ -289,7 +289,7 @@ export default {
 
       if (this.photo_file) {
         const new_picture_url = await uploadUserPicture(this.photo_file);
-        this.photo_url = changedData.fotodeperfil
+        this.photo_url = changedData.fotodeperfil = new_picture_url;
       }
 
       if (this.validateChanged(this.profile_data.username, this.username))
