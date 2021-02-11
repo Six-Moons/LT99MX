@@ -157,8 +157,8 @@ export default {
 
 @media (max-width: 1199px) {
   .logo-div {
-    margin: 1em;
-    width: 7vw;
+    margin: 1em auto;
+    width: 6vw;
   }
 }
 

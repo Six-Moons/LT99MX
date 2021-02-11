@@ -125,7 +125,7 @@ export default {
   overflow-y: scroll;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 575px) {
   .rankings {
     margin-top: 3em;
   }

@@ -1,7 +1,7 @@
 <template>
-  <div id="faq">
+  <div id="faq" class="bg-light">
     <div class="row">
-      <div id="imagenes" class="col-md-7 col-lg-8 bg-light">
+      <div id="imagenes" class="col-xl-8">
         <div>
           <h2><strong>Sobre nosotros</strong></h2>
         </div>
@@ -304,7 +304,7 @@
           </b-card>
         </div>
       </div>
-      <right-panel class="col-5 col-lg-4 hide-sm"></right-panel>
+      <right-panel class="col-4 show-xl"></right-panel>
     </div>
   </div>
 </template>
@@ -343,9 +343,10 @@ export default {
 #faq {
   height: 100vh;
   overflow-y: scroll;
+  padding: 0 2em;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 575px) {
   #faq {
     margin-top: 3em;
   }

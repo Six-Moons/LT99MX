@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="row">
-      <div id="profile-area" class="col-lg-8">
+      <div id="profile-area" class="col-xl-8">
         <!-- <h1>Perfil</h1> -->
         <div class="row">
           <div class="col-7 row">
@@ -190,7 +190,7 @@
           </div>
         </b-modal>
       </div>
-      <right-panel class="col-4 show-lg"></right-panel>
+      <right-panel class="col-4 show-xl"></right-panel>
     </div>
   </div>
 </template>
@@ -213,9 +213,24 @@ export default {
       description: null,
       telephone: null,
       recentMatches: [
-        { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
-        { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
-        { dato1: "Lorem", dato2: "Ipsum", dato3: "Dolor" },
+        {
+          Posición: "1",
+          Fecha: new Date("2021-02-09").toLocaleString("es", {
+            dateStyle: "short",
+          }),
+        },
+        {
+          Posición: "1",
+          Fecha: new Date("2021-02-09").toLocaleString("es", {
+            dateStyle: "short",
+          }),
+        },
+        {
+          Posición: "1",
+          Fecha: new Date("2021-02-09").toLocaleString("es", {
+            dateStyle: "short",
+          }),
+        },
       ],
       profile_data: {
         username: null,
@@ -360,7 +375,7 @@ export default {
   font-size: 3vh;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .profile {
     margin-top: 3em;
   }
