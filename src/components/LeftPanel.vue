@@ -1,6 +1,6 @@
 <template>
   <div id="left-panel">
-    <div class="logo-div">
+    <div class="logo-div mx-auto">
       <img
         src="../assets/logo.png"
         alt="Logo Liga Tetris 99 México"
@@ -49,7 +49,9 @@
           <tetromino :href="svgs.S"></tetromino> Sobre nosotros
         </div>
         <div class="hide-xs hide-xl">
-          <b-icon-question class="nav-icon i-green"></b-icon-question>
+          <b-icon-info-circle-fill
+            class="nav-icon i-green"
+          ></b-icon-info-circle-fill>
         </div>
       </b-nav-item>
       <b-nav-item
@@ -137,6 +139,7 @@ export default {
 <style scoped>
 #left-panel {
   height: 100vh;
+  /* padding-top: 12.5vh; */
 }
 
 @media (min-width: 1200px) {
@@ -144,13 +147,25 @@ export default {
     font-size: 1.7vw;
     color: var(--light);
   }
+
+  .logo-div {
+    width: 10vw;
+    height: 10vw;
+    margin: 6vh;
+  }
 }
 
-.logo-div {
-  width: 3.4vw;
-  height: 3.4vw;
-  margin-left: 2.5vh;
-  margin-top: 1em;
+@media (max-width: 1199px) {
+  .logo-div {
+    margin: 1em;
+    width: 7vw;
+  }
+}
+
+@media (max-width: 1199px) {
+  .nav-link {
+    padding: 0.5rem 1.5vw;
+  }
 }
 
 .logout {
@@ -170,6 +185,8 @@ export default {
 .nav-div {
   /* border-radius: 9999px; */
   padding-left: 0.5em;
+  width: 18vw;
+  margin: 0 auto;
   font-weight: bold;
 }
 
