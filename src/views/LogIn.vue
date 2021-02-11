@@ -64,6 +64,35 @@
           </b-form-group>
 
           <b-form-group
+            id="registration-telephone-group"
+            label="Celular"
+            label-for="registration-telephone"
+            description="Necesitamos tu teléfono para poder agregarte al grupo de Whatsapp por donde se pasarán los códigos."
+          >
+            <b-form-input
+              id="registration-telephone"
+              placeholder="Número de teléfono"
+              type="tel"
+              v-model="registrationData.telephone"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="registration-email-group"
+            label="Correo:"
+            label-for="registration-email"
+          >
+            <b-form-input
+              id="registration-email"
+              v-model="registrationData.email"
+              type="email"
+              placeholder="correo@ejemplo.com"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
             id="registration-state-group"
             label="Estado:"
             label-for="registration-state"
@@ -162,13 +191,13 @@ export default {
     return {
       name: "",
       registrationData: {
-        email: "hocwilo@wojonooh.fr",
-        nombre: "Adelaide Olson",
-        username: "hocwilo",
-        telefono: "4753131220",
-        estado: null,
-        password: "nO9lIyRL",
-        passwordConfirmation: "nO9lIyRL",
+        email: "",
+        name: "",
+        username: "",
+        telephone: "",
+        state: null,
+        password: "",
+        passwordConfirmation: "",
       },
       loginData: {
         email: "hocwilo@wojonooh.fr",

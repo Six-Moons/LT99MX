@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 import { getNews } from "../reqs/news";
 import NewsCard from "../components/NewsCard.vue";
 

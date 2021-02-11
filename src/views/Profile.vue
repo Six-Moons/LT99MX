@@ -73,7 +73,9 @@
             <b-avatar
               button
               @click="changePhoto"
+
               :src="profile_data.photo_url"
+
               size="6rem"
               badge-variant="dark"
             >
@@ -89,6 +91,7 @@
             accept="image/*"
             plain
             @change="updateAvatarSrc"
+
           ></b-form-file>
           <div>
             <b-form-group
@@ -212,6 +215,7 @@ export default {
       state: null,
       description: null,
       telephone: null,
+
       recentMatches: [
         {
           Posición: "1",
@@ -233,6 +237,7 @@ export default {
         },
       ],
       profile_data: {
+
         username: null,
         email: null,
         state: null,
@@ -276,6 +281,7 @@ export default {
         { text: "Veracruz", value: "Veracruz" },
         { text: "Yucatán", value: "Yucatan" },
         { text: "Zacatecas", value: "Zacatecas" },
+
         "Otro",
       ],
       photo_file: null,
@@ -374,6 +380,7 @@ export default {
 #username {
   font-size: 3vh;
 }
+
 
 @media (max-width: 575px) {
   .profile {
