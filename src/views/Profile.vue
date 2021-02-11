@@ -190,7 +190,7 @@
           </div>
         </b-modal>
       </div>
-      <right-panel class="col-4 show-xl"></right-panel>
+      <right-panel class="col-4 show-lg"></right-panel>
     </div>
   </div>
 </template>

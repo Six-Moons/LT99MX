@@ -93,7 +93,7 @@
         </div>
       </b-nav-item>
     </b-nav>
-    <div class="show-xl logout">
+    <div class="show-xl logout" v-show="session">
       <button class="btn btn-lg btn-danger logout-btn" @click="logout">
         Cerrar Sesión
       </button>
