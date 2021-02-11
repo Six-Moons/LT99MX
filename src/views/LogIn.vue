@@ -1,5 +1,8 @@
 <template>
   <div class="login bg-light">
+    <b-alert v-model="showAlert" variant="danger" dismissible>
+      Las contraseñas no coinciden
+    </b-alert>
     <div class="row">
       <div class="col-sm">
         <h2>Crear Cuenta</h2>
@@ -11,7 +14,7 @@
           >
             <b-form-input
               id="registration-name"
-              v-model="registrationData.name"
+              v-model="registrationData.nombre"
               placeholder="Nombre(s)"
               required
             ></b-form-input>
@@ -26,6 +29,36 @@
               id="registration-username"
               placeholder="Nombre de usuario"
               v-model="registrationData.username"
+              maxlength="20"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="registration-telephone-group"
+            label="Celular"
+            label-for="registration-telephone"
+            description="Necesitamos tu teléfono para poder agregarte al grupo de Whatsapp por donde se pasarán los códigos."
+          >
+            <b-form-input
+              id="registration-telephone"
+              placeholder="Número de teléfono"
+              type="tel"
+              v-model="registrationData.telefono"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="registration-email-group"
+            label="Correo:"
+            label-for="registration-email"
+          >
+            <b-form-input
+              id="registration-email"
+              v-model="registrationData.email"
+              type="email"
+              placeholder="correo@ejemplo.com"
               required
             ></b-form-input>
           </b-form-group>
@@ -66,7 +99,7 @@
           >
             <b-form-select
               id="registration-state"
-              v-model="registrationData.state"
+              v-model="registrationData.estado"
               :options="stateOptions"
               required
             ></b-form-select>
@@ -149,6 +182,9 @@
 </template>
 
 <script>
+import { registerUser, loginUser } from "../reqs/auth";
+import router from "../router";
+
 export default {
   name: "LogIn",
   data() {
@@ -164,43 +200,43 @@ export default {
         passwordConfirmation: "",
       },
       loginData: {
-        email: "",
-        password: "",
+        email: "hocwilo@wojonooh.fr",
+        password: "nO9lIyRL",
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
-        "Aguascalientes",
-        "Baja California",
-        "Baja California Sur",
-        "Campeche",
-        "Chiapas",
-        "Ciudad de México",
-        "Chihuahua",
-        "Coahuila",
-        "Colima",
-        "Durango",
-        "Estado de México",
-        "Guanajuato",
-        "Guerrero",
-        "Hidalgo",
-        "Jalisco",
-        "Michoacán",
-        "Morelos",
-        "Nayarit",
-        "Nuevo León",
-        "Oaxaca",
-        "Puebla",
-        "Querétaro",
-        "Quintana Roo",
-        "San Luis Potosí",
-        "Sinaloa",
-        "Sonora",
-        "Tabasco",
-        "Tamaulipas",
-        "Tlaxcala",
-        "Veracruz",
-        "Yucatán",
-        "Zacatecas",
+        { text: "Aguascalientes", value: "Aguascalientes" },
+        { text: "Baja California", value: "BajaCalifornia" },
+        { text: "Baja California Sur", value: "BajaCaliforniaSur" },
+        { text: "Campeche", value: "Campeche" },
+        { text: "Chiapas", value: "Chiapas" },
+        { text: "Chihuahua", value: "Chihuahua" },
+        { text: "Ciudad de México", value: "CiudadDeMexico" },
+        { text: "Coahuila", value: "Coahuila" },
+        { text: "Colima", value: "Colima" },
+        { text: "Durango", value: "Durango" },
+        { text: "Estado de México", value: "EstadoDeMexico" },
+        { text: "Guanajuato", value: "Guanajuato" },
+        { text: "Guerrero", value: "Guerrero" },
+        { text: "Hidalgo", value: "Hidalgo" },
+        { text: "Jalisco", value: "Jalisco" },
+        { text: "Michoacán", value: "Michoacan" },
+        { text: "Morelos", value: "Morelos" },
+        { text: "Nayarit", value: "Nayarit" },
+        { text: "Nuevo León", value: "NuevoLeon" },
+        { text: "Oaxaca", value: "Oaxaca" },
+        { text: "Puebla", value: "Puebla" },
+        { text: "Querétaro", value: "Queretaro" },
+        { text: "Quintana Roo", value: "QuintanaRoo" },
+        { text: "San Luis Potosí", value: "SanLuisPotosi" },
+        { text: "Sinaloa", value: "Sinaloa" },
+        { text: "Sonora", value: "Sonora" },
+        { text: "Tabasco", value: "Tabasco" },
+        { text: "Tamaulipas", value: "Tamaulipas" },
+        { text: "Tlaxcala", value: "Tlaxcala" },
+        { text: "Veracruz", value: "Veracruz" },
+        { text: "Yucatán", value: "Yucatan" },
+        { text: "Zacatecas", value: "Zacatecas" },
         "Otro",
       ],
       imgs: [
@@ -210,16 +246,33 @@ export default {
         { src: require("@/assets/imgs/rulue.png"), alt: "Imagen de Rulue" },
       ],
       img: "",
+      showAlert: false,
     };
   },
+
   methods: {
-    registrationSubmit(event) {
+    async registrationSubmit(event) {
       event.preventDefault();
-      console.log(JSON.stringify(this.registrationData));
+      if (
+        this.registrationData.password !==
+        this.registrationData.passwordConfirmation
+      ) {
+        this.showAlert = true;
+        return;
+      }
+      const status = await registerUser(this.registrationData);
+      if (status === "Authenticated") {
+        this.$emit("loggedIn", true);
+        router.push("/");
+      }
     },
-    loginSubmit(event) {
+    async loginSubmit(event) {
       event.preventDefault();
-      console.log(JSON.stringify(this.loginData));
+      const status = await loginUser(this.loginData);
+      if (status === "Authenticated") {
+        this.$emit("loggedIn", true);
+        router.push("/");
+      }
     },
   },
   mounted() {

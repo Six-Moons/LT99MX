@@ -1,46 +1,57 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Profile from '../views/Profile.vue';
-import Rankings from '../views/Rankings.vue';
-import LogIn from '../views/LogIn.vue';
-import Faq from '../views/Faq.vue';
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Profile from "../views/Profile.vue";
+import Rankings from "../views/Rankings.vue";
+import LogIn from "../views/LogIn.vue";
+import News from "../views/News.vue";
+import Faq from "../views/Faq.vue";
+import NewsArticle from "../views/NewsArticle.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/mi-cuenta',
-    name: 'Profile',
-    component: Profile
+    path: "/mi-cuenta",
+    name: "Profile",
+    component: Profile,
   },
   {
-    path: '/rankings',
-    name: 'Rankings',
-    component: Rankings
+    path: "/rankings",
+    name: "Rankings",
+    component: Rankings,
   },
   {
-    path: '/log-in',
-    name: 'Log In',
-    component: LogIn
+    path: "/log-in",
+    name: "Log In",
+    component: LogIn,
   },
-
   {
-    path: '/faq',
-    name: 'FAQ',
-    component: Faq
-  }
+    path: "/noticias/:news_id",
+    name: "News",
+    component: NewsArticle,
+  },
+  {
+    path: "/noticias",
+    name: "News",
+    component: News,
+  },
+  {
+    path: "/faq",
+    name: "FAQ",
+    component: Faq,
+  },
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

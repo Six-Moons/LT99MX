@@ -1,11 +1,10 @@
 <template>
   <div id="home">
     <div class="row">
-      <div id="news-area" class="col-md-7 col-lg-8">
+      <div id="news-area" class="col-xl-8">
         <!-- Most important news -->
         <b-carousel
           id="carousel-1"
-          v-model="slide"
           :interval="4000"
           controls
           indicators
@@ -13,11 +12,9 @@
           img-width="1024"
           img-height="480"
           style="text-shadow: 1px 1px 2px #333"
-          @sliding-start="onSlideStart"
-          @sliding-end="onSlideEnd"
           label-prev=""
           label-next=""
-          no-animation="true"
+          no-animation
         >
           <!-- Text slides with image -->
           <b-carousel-slide
@@ -64,11 +61,11 @@
           </b-carousel-slide>
         </b-carousel>
         <!-- News feed -->
-        <div v-for="article in news" v-bind:key="article.title">
+        <div v-for="article in news" v-bind:key="article.id">
           <news-card class="news-card" :article="article"></news-card>
         </div>
       </div>
-      <right-panel class="col-5 col-lg-4 hide-sm"></right-panel>
+      <right-panel class="col-4 show-xl"></right-panel>
     </div>
   </div>
 </template>
@@ -76,6 +73,7 @@
 <script>
 import NewsCard from "../components/NewsCard.vue";
 import RightPanel from "../components/RightPanel.vue";
+import { getNews } from "../reqs/news";
 
 export default {
   name: "Home",
@@ -85,34 +83,11 @@ export default {
   },
   data() {
     return {
-      news: [
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Puyo puyo tetris",
-          content:
-            "Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-      ],
+      news: null,
     };
+  },
+  async mounted() {
+    this.news = await getNews();
   },
 };
 </script>
@@ -123,7 +98,7 @@ export default {
 }
 
 #news-area {
-  padding: 1em;
+  padding: 2em;
   background-color: var(--light);
 }
 
@@ -139,7 +114,7 @@ export default {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   #home {
     margin-top: 3em;
   }

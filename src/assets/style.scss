@@ -36,48 +36,49 @@ $danger: $red !default;
 $theme-colors: () !default;
 $theme-colors: map-merge(
   (
-    'primary': $primary,
-    'secondary': $secondary,
-    'success': $success,
-    'info': $info,
-    'warning': $warning,
-    'danger': $danger,
-    'light': $light,
-    'dark': $dark,
-    'red': $red,
-    'orange': $orange,
-    'yellow': $yellow,
-    'green': $green,
-    'blue': $blue,
-    'purple': $purple
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark,
+    "red": $red,
+    "orange": $orange,
+    "yellow": $yellow,
+    "green": $green,
+    "blue": $blue,
+    "purple": $purple,
   ),
   $theme-colors
 );
 
-@import '~bootstrap/scss/bootstrap.scss';
-@import '~bootstrap-vue/src/index.scss';
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";
+@import "~vue-simple-markdown/dist/vue-simple-markdown.css";
 
 @font-face {
-  font-family: 'HomepageBaukasten';
-  src: local('HomepageBaukasten'),
-    url(./fonts/HomepageBaukasten-Book.ttf) format('truetype');
+  font-family: "HomepageBaukasten";
+  src: local("HomepageBaukasten"),
+    url(./fonts/HomepageBaukasten-Book.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'HomepageBaukasten-bold';
-  src: local('HomepageBaukasten-bold'),
-    url(./fonts/HomepageBaukasten-Bold.ttf) format('truetype');
+  font-family: "HomepageBaukasten-bold";
+  src: local("HomepageBaukasten-bold"),
+    url(./fonts/HomepageBaukasten-Bold.ttf) format("truetype");
 }
 
 * {
-  font-family: 'HomepageBaukasten';
+  font-family: "HomepageBaukasten";
 }
 
 body {
   border: 0;
   margin: 0;
   padding: 0;
-  font-family: 'Lato';
+  font-family: "Lato";
   height: 100%;
 }
 

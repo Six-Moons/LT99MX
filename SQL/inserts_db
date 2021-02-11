@@ -1,2 +1,0 @@
-#! /bin/bash
-more SQL/test_inserts.sql | psql -d tetris_test -U aleuwu 

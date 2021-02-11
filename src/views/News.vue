@@ -7,40 +7,20 @@
 </template>
 
 <script>
+
+import { getNews } from "../reqs/news";
 import NewsCard from "../components/NewsCard.vue";
+
 export default {
   components: { NewsCard },
   name: "News",
   data() {
     return {
-      news: [
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Puyo puyo tetris",
-          content:
-            "Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris Puyo Puyo Tetris",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-        {
-          title: "Lorem ipsum",
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eum nisi facilis sint quaerat placeat quibusdam eius. Ut eum tempore repudiandae, officiis dolores iusto ex alias. Alias rem ipsum eligendi.",
-        },
-      ],
+      news: null,
     };
+  },
+  async mounted() {
+    this.news = await getNews();
   },
 };
 </script>
