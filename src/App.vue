@@ -58,7 +58,6 @@ export default {
   methods: {
     updateSession(authenticated) {
       this.loggedIn = authenticated;
-      console.log("Here");
     },
   },
   async created() {

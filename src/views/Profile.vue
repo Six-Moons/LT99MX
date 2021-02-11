@@ -73,7 +73,7 @@
             <b-avatar
               button
               @click="changePhoto"
-              :src="photo_url"
+              :src="profile_data.photo_url"
               size="6rem"
               badge-variant="dark"
             >
@@ -88,6 +88,7 @@
             class="hidden"
             accept="image/*"
             plain
+            @change="updateAvatarSrc"
           ></b-form-file>
           <div>
             <b-form-group
@@ -206,7 +207,7 @@ export default {
       username: null,
       email: null,
       favorite_badge: null,
-      photo_url: "http://placekitten.com/460/460",
+      photo_url: null,
       name: null,
       state: null,
       description: null,
@@ -224,6 +225,7 @@ export default {
         passwordConfirmation: null,
         description: null,
         telephone: null,
+        photo_url: null,
       },
       stateOptions: [
         { text: "-- Selecciona uno -- ", value: null, disabled: true },
@@ -277,9 +279,17 @@ export default {
       this.profile_data.name = this.name = data.nombre;
       this.profile_data.state = this.state = data.estado;
       this.profile_data.description = this.description = data.descripcion;
+      this.photo_url = this.profile_data.photo_url =
+        process.env.VUE_APP_API_URL +
+        data.fotoDePerfil.formats.small.url.substring(1);
     },
     changePhoto() {
       document.querySelector("#photo-input").click();
+    },
+    updateAvatarSrc() {
+      this.profile_data.photo_url = URL.createObjectURL(
+        document.querySelector("#photo-input").files[0]
+      );
     },
     validateChanged(edited, original) {
       return edited && edited !== original && edited !== "";
@@ -288,8 +298,11 @@ export default {
       const changedData = {};
 
       if (this.photo_file) {
-        const new_picture_url = await uploadUserPicture(this.photo_file);
-        this.photo_url = changedData.fotodeperfil = new_picture_url;
+        const newPictureData = await uploadUserPicture(this.photo_file);
+        this.photo_url =
+          process.env.VUE_APP_API_URL +
+          newPictureData.formats.small.url.substring(1);
+        changedData.fotoDePerfil = newPictureData;
       }
 
       if (this.validateChanged(this.profile_data.username, this.username))
@@ -313,7 +326,9 @@ export default {
       if (this.validateChanged(this.profile_data.description, this.description))
         changedData.descripcion = this.profile_data.description;
 
-      if (Object.keys(changedData).length) await updateUserData(changedData);
+      if (Object.keys(changedData).length) {
+        await updateUserData(changedData);
+      }
 
       // Change to corresponding POST requests ONCE BACK END IS READY
       this.username = this.profile_data.username;
